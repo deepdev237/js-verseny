@@ -94,6 +94,7 @@ main .content .categories input[type = 'checkbox'] {
 }
 
 main .content .categories label {
+    color: white;
     padding: .8em;
     text-align: center;
     background-color: rgba(79, 79, 79, 0.32);
@@ -106,12 +107,14 @@ main .content .categories label:hover {
 }
 
 main .content .categories input[type = 'checkbox']:checked + label {
+    color: rgb(4, 208, 4);
     background-color: rgba(82, 117, 76, 0.32);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.356);
     border: green 2px solid;
 }
 
 main .content .categories .dislike input[type = 'checkbox']:checked + label {
+    color: rgb(201, 0, 0);
     background-color: rgba(120, 65, 65, 0.32);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.356);
     border: rgb(128, 0, 0) 2px solid;
