@@ -26,8 +26,8 @@ function fillCategories() {
 		dislikecategory_div = dislikecategory_div + dislike__html
 	}
 	//console.log(categories_div)
-	document.getElementById("like").getElementsByClassName("checkbox-container")[0].innerHTML = likecategory_div;
-	document.getElementById("dislike").getElementsByClassName("checkbox-container")[0].innerHTML = dislikecategory_div;
+	document.getElementsByClassName("like")[0].getElementsByClassName("checkbox-container")[0].innerHTML = likecategory_div;
+	document.getElementsByClassName("dislike")[0].getElementsByClassName("checkbox-container")[0].innerHTML = dislikecategory_div;
 }
 
 function getCheckBoxBool(checkbox) {
