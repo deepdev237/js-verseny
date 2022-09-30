@@ -1,6 +1,4 @@
 categories = ['sci-fi', 'fantasztikus', 'történelmi', 'akció', 'dráma']
-films = {}
-
 /*
 $.getJSON( "ajax/test.json", function( data ) {
 	var items = [];
@@ -35,6 +33,19 @@ function getCheckBoxBool(checkbox) {
 }
 
 function setFilms() {
+	$.getJSON('filmek.json', (data) => {
+		const markup = data.items
+		  .map(item => `<li>${item.key}: ${item.value}</li>`)
+		  .join('');
+  
+		const list = $('<ul />').html(markup);
+  
+		$showData.html(list);
+  
+		$raw.text(JSON.stringify(data, undefined, 2));
+	  });
+
+	/*
 	for (let i = 0; i < films.length; i++) {
 		const name = films[i];
 		const img_src = films[i]["img"]
@@ -46,10 +57,12 @@ function setFilms() {
 			}
 		});
 	}
+	*/
 }
 
 window.onload = function() {
     console.log('hey');
 
 	fillCategories()
+	setFilms()
 };
