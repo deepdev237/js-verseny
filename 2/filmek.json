@@ -1,0 +1,10 @@
+{
+    "Mission: Impossible" : {
+        "sci-fi" : false,
+        "fantasztikus" : true,
+        "történelmi" : false,
+        "akció" : true,
+        "dráma" : false,
+        "img" : "https://i.cdn29.hu/apix_collect_c/1608/mission-impossible-6/mission_impossible_6_screenshot_20160821212709_1_original_1150x645_cover.jpg"
+    }
+}

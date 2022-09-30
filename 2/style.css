@@ -1,0 +1,63 @@
+.header {
+    padding: 5vw;
+    margin: 0;
+    background: green;
+}
+
+#categories {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#categories input {
+    float: left;
+}
+
+#logo {
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    right: -20px;
+    top: -40px;
+    padding: inherit;
+    text-align: right;
+    color: greenyellow;
+}
+
+.content {
+    margin: 0;
+    padding: 50vh;
+    background-color: rgb(127, 255, 144);
+}
+
+.film {
+    margin: 0;
+    padding: 1vw;
+    width: 30vw;
+    height: 30vh;
+    display:flex;
+    flex-wrap:wrap;
+    overflow-y:hidden;
+}
+
+.film > div {
+    flex: 1 1 100px;
+    height:100px;
+    padding:20px;
+    margin-right:10px;
+}
+
+.film > div:last-child {
+    margin-right:0;
+}
+
+.film > div:nth-child(even) {
+    background:red;
+}
+
+.film img {
+    width: 70%;
+    height: 70%;
+    align-items: flex-end;
+}
