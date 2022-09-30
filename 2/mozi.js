@@ -1,6 +1,7 @@
 categories = ['sci-fi', 'fantasztikus', 'történelmi', 'akció', 'dráma']
 films = {}
 
+/*
 $.getJSON( "ajax/test.json", function( data ) {
 	var items = [];
 	$.each( data, function( key, val ) {
@@ -12,16 +13,21 @@ $.getJSON( "ajax/test.json", function( data ) {
 		html: items.join( "" )
 	}).appendTo( "body" );
 });
+*/
 
 function fillCategories() {
-	let categories_div = ""
+	let likecategory_div = ""
+	let dislikecategory_div = ""
 	for (let i = 0; i < categories.length; i++) {
 		const category = categories[i];
-		let string = "<input type=checkbox id=" + category +  "name=" + category + " value=" + category + "><label for=" + category + ">" + category + "</label><br>";
-		categories_div = categories_div + string
+		let like_html = '<input type="checkbox" name="' + category + '" id="' + category + '">' + '<label for="' + category + '">' + category + '</label>'
+		let dislike__html = '<input type="checkbox"  class="dislike" name="' + category + '" id="' + category + '">' + '<label for="' + category + '">' + category + '</label>'
+		likecategory_div = likecategory_div + like_html
+		dislikecategory_div = dislikecategory_div + dislike__html
 	}
 	//console.log(categories_div)
-	document.getElementById('categories').innerHTML = categories_div;
+	document.getElementById("like").getElementsByClassName("checkbox-container")[0].innerHTML = likecategory_div;
+	document.getElementById("dislike").getElementsByClassName("checkbox-container")[0].innerHTML = dislikecategory_div;
 }
 
 function getCheckBoxBool(checkbox) {
