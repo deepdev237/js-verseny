@@ -17,18 +17,16 @@ $('input[name="like"]').change(function() {
 	dislike_category = '#' + 'dislike_' + category
 	$(dislike_category).prop( "checked", false );
 
-	category_label = document.getElementById(category).labels[0].textContent
+	//category_label = document.getElementById(category).labels[0].textContent
 });
 
 $('input[name="dislike"]').change(function() {
 	category = $('input[name="dislike"]:checked').attr('id')
-	console.log(category)
-
+	
 	like_category = category.slice(8)
-	console.log(like_category)
 	$('#' + like_category).prop( "checked", false );
 
-	category_label = document.getElementById(category).labels[0].textContent
+	//category_label = document.getElementById(category).labels[0].textContent
 });
 
 //kivalasztott kategoriak megejelenitese
@@ -45,7 +43,6 @@ $('#done').click(function(event) {
 	let movie;
 	for (let index = 0; index < movies.length; index++) { // loop through movies
 		movie = movies[index];
-		console.log(movie)
 		let show_movie = false;
 
 		for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
@@ -69,7 +66,6 @@ $('#done').click(function(event) {
 		}
 
 		if (show_movie) {
-			console.log(movie)
 			filtered_movies += '<div class="movie_card" data-href="'+ movie.link +'"><img src="'+ movie.img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movie.title +'</b><p id="category">'+ movie.categories[0] +', '+ movie.categories[1] +'</p><p id="release_date">'+ movie.relase_date +'</p></div></div>';
 		}
 	}
