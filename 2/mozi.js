@@ -35,27 +35,46 @@ $('input[name="dislike"]').change(function() {
 //felig mukodik. ha egy film mind a ket kategoriat tratalmazza, akkor 2x jelenik meg
 
 $('#done').click(function(event) {
-
-	filtered_movie = "";
-
 	event.preventDefault();
 
-    like = $('input[name="like"]:checked').map(function(){
-	return $(this).val();
-    }).get();
+    let likes = $('input[name="like"]:checked').map(function(){return $(this).val();}).get();
+	let dislikes = $('input[name="dislike"]:checked').map(function(){return $(this).val();}).get();
 
-	console.log(like)
+	let filtered_movies = "";
 
-	for (let index = 0; index < movies.length; index++) {
-		for (let liked_movies = 0; liked_movies < like.length; liked_movies++) {
-			if (movies[index].categories[0] == like[liked_movies] || movies[index].categories[1] == like[liked_movies]) {
-				filtered_movie += '<div class="movie_card" data-href="'+ movies[index].link +'"><img src="'+ movies[index].img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movies[index].title +'</b><p id="category">'+ movies[index].categories[0] +', '+ movies[index].categories[1] +'</p><p id="release_date">'+ movies[index].relase_date +'</p></div></div>';
+	let movie;
+	for (let index = 0; index < movies.length; index++) { // loop through movies
+		movie = movies[index];
+		console.log(movie)
+		let show_movie = false;
+
+		for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
+			let category = movie.categories[c];
+
+			for (let i = 0; i < likes.length; i++) { // loop through liked categories
+				let liked_category = likes[i];
+				if (category == liked_category) { // if the category is liked
+					show_movie = true;
+					continue;
+				}
 			}
+
+			for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
+				let disliked_category = dislikes[i];
+				if (category == disliked_category) { // if the category is disliked
+					show_movie = false;
+					continue;
+				}
+			}
+		}
+
+		if (show_movie) {
+			console.log(movie)
+			filtered_movies += '<div class="movie_card" data-href="'+ movie.link +'"><img src="'+ movie.img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movie.title +'</b><p id="category">'+ movie.categories[0] +', '+ movie.categories[1] +'</p><p id="release_date">'+ movie.relase_date +'</p></div></div>';
 		}
 	}
 
-	$(".movies").html(filtered_movie);
-
+	$(".movies").html(filtered_movies);
 });
 
 //link_megnyitása
