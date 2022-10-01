@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Film ajánló</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script defer type="text/javascript" src="filmek.json"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="mozi.js"></script>
 </head>
 <body>
@@ -26,128 +25,49 @@
                 <div class="like">
                     <h3>Kedvelt kategóriák:</h3>
                     <div class="checkbox-container">
-                        <!--
-                        <input type="checkbox" name="scif" id="scif">
-                        <label for="scif">Sc-Fi</label>
-                        <input type="checkbox" name="kaland" id="kaland">
-                        <label for="kaland">Kaland</label>
-                        <input type="checkbox" name="horror" id="horror">
+                        <input type="checkbox" name="like" id="sciif" value="Sci-Fi">
+                        <label for="sciif">Sci-Fi</label>
+                        <input type="checkbox" name="like" id="fantasy" value="Fantasy">
+                        <label for="fantasy">Fantasy</label>
+                        <input type="checkbox" name="like" id="politikai_szatira" value="Politikai szatíra">
+                        <label for="politikai_szatira">Politikai szatíra</label>
+                        <input type="checkbox" name="like" id="thriller" value="Thriller">
+                        <label for="thriller">Thriller</label>
+                        <input type="checkbox" name="like" id="vigjatek" value="Vígjáték">
+                        <label for="vigjatek">Vígjáték</label>
+                        <input type="checkbox" name="like" id="horror" value="Horror">
                         <label for="horror">Horror</label>
-                        <input type="checkbox" name="akcio" id="akcio">
+                        <input type="checkbox" name="like" id="akcio" value="Akció">
                         <label for="akcio">Akció</label>
-                        <input type="checkbox" name="fantasztikus" id="fantasztikus">
+                        <input type="checkbox" name="like" id="fantasztikus" value="Fantasztikus">
                         <label for="fantasztikus">Fantasztikus</label>
-                        -->
                     </div>
                 </div>
                 <div class="dislike">
                     <h3>Nem kedvelt kategóriák:</h3>
                     <div class="checkbox-container">
-                        <!--
-                        <input type="checkbox" class="dislike" name="dislike_scif" id="dislike_scif">
+                        <input type="checkbox" name="dislike" id="dislike_scif" value="Sci-Fi">
                         <label for="dislike_scif">Sc-Fi</label>
-                        <input type="checkbox" class="dislike" name="dislike_kaland" id="dislike_kaland">
-                        <label for="dislike_kaland">Kaland</label>
-                        <input type="checkbox" class="dislike" name="dislike_horror" id="dislike_horror">
+                        <input type="checkbox" name="dislike" id="dislike_fantasy" value="Fantasy">
+                        <label for="dislike_fantasy">Fantasy</label>
+                        <input type="checkbox" name="dislike" id="dislike_politikai_szatira" value="Politikai szatíra">
+                        <label for="dislike_politikai_szatira">Politikai szatíra</label>
+                        <input type="checkbox" name="dislike" id="dislike_thriller" value="Thriller">
+                        <label for="dislike_thriller">Thriller</label>
+                        <input type="checkbox" name="dislike" id="dislike_vigjatek" value="Vígjáték">
+                        <label for="dislike_vigjatek">Vígjáték</label>
+                        <input type="checkbox" name="dislike" id="dislike_horror" value="Vigjáték">
                         <label for="dislike_horror">Horror</label>
-                        <input type="checkbox" class="dislike" name="dislike_akcio" id="dislike_akcio">
+                        <input type="checkbox" name="dislike" id="dislike_akcio" value="Akció">
                         <label for="dislike_akcio">Akció</label>
-                        <input type="checkbox" class="dislike" name="dislike_fantasztikus" id="dislike_fantasztikus">
+                        <input type="checkbox" name="dislike" id="dislike_fantasztikus" value="Fantasztikus">
                         <label for="dislike_fantasztikus">Fantasztikus</label>
-                        -->
                     </div>
                 </div>
+                <button id="done">Keresés</button>
             </div>
-            <div class="movies">
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-                <div class="movie_card">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg" alt="">
-                    <div class="img_shadow"></div>
-                    <div class="movie_card-details">
-                        <b>Mission: Impossible</b>
-                        <p id="category">Fantasztikus, Akció</p>
-                        <p id="release_date">1996 május 22</p>
-                    </div>
-                </div>
-            </div>
+            <div class="movies"></div>
         </div>
     </main>
-
-    <!--<div class="header">
-        <div id="categories"></div>
-        <button>Apply</button>
-        <h1 id="logo">Mozi ajánló</h1>
-        <button onclick="myFunction()">Toggle dark mode</button>
-    </div>
-
-    <div class="content">
-        <div class="film">
-            <img src="https://i.cdn29.hu/apix_collect_c/1608/mission-impossible-6/mission_impossible_6_screenshot_20160821212709_1_original_1150x645_cover.jpg" alt="">
-            <h2>Mission: Impossible</h2><br>
-            <h3>Fantasztikus, Akció</h3>
-        </div>
-    </div>-->
 </body>
 </html>

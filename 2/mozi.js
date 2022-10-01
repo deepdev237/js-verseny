@@ -1,68 +1,63 @@
-categories = ['sci-fi', 'fantasztikus', 'történelmi', 'akció', 'dráma']
-/*
-$.getJSON( "ajax/test.json", function( data ) {
-	var items = [];
-	$.each( data, function( key, val ) {
-		items.push( "<li id='" + key + "'>" + val + "</li>" );
-	});
-	
-	$( "<ul/>", {
-		"class": "my-new-list",
-		html: items.join( "" )
-	}).appendTo( "body" );
+//filmek
+
+const movie1 = {title: "Mission: Impossible", categories: ["Akció", "Fantasztikus"], relase_date: "1996. május 22.", img: "https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg", link: "https://www.imdb.com/title/tt0117060/"};
+const movie2 = {title: "Ready Player One", categories: ["Akció", "Sci-Fi"], relase_date: "2018. március 29.", img: "https://m.media-amazon.com/images/M/MV5BY2JiYTNmZTctYTQ1OC00YjU4LWEwMjYtZjkwY2Y5MDI0OTU3XkEyXkFqcGdeQXVyNTI4MzE4MDU@._V1_.jpg", link: "https://www.imdb.com/title/tt1677720/"};
+const movie3 = {title: "The Suicide Squad", categories: ["Vígjáték", "Fantasy"], relase_date: "2021. július 30.", img: "https://m.media-amazon.com/images/M/MV5BMWU4NDQ2NjEtNjhkOS00Y2MwLWJkODItZmJhZGE0MDU1OWM4XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg", link: "https://www.imdb.com/title/tt6334354/"};
+const movie4 = {title: "Don't Look Up", categories: ["Vígjáték", "Politikai szatíra"], relase_date: "2021. december 5.", img: "https://fr.web.img3.acsta.net/pictures/21/11/16/17/11/5656957.jpg", link: "https://www.imdb.com/title/tt11286314/"};
+const movie5 = {title: "Countdown", categories: ["Horror", "Thriller"], relase_date: "2019. október 25.", img: "https://m.media-amazon.com/images/M/MV5BODY3OGEyMTgtYTZjZi00Y2YzLWFjY2UtMjEwYWE1MjRkOTc4XkEyXkFqcGdeQXVyODQxMTI4MjM@._V1_.jpg", link: "https://www.imdb.com/title/tt10039344/"};
+const movie6 = {title: "No Time to Die", categories: ["Akció", "Thriller"], relase_date: "2021. szeptember 30.", img: "https://m.media-amazon.com/images/M/MV5BYWQ2NzQ1NjktMzNkNS00MGY1LTgwMmMtYTllYTI5YzNmMmE0XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg", link: "https://www.imdb.com/title/tt2382320/"};
+const movies = [movie1, movie2, movie3, movie4, movie5, movie6];
+
+//oesszes film megjelenitese
+
+all_movie = '';
+
+for (let index = 0; index < movies.length; index++) {
+	all_movie += '<div class="movie_card" data-href="'+ movies[index].link +'"><img src="'+ movies[index].img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movies[index].title +'</b><p id="category">'+ movies[index].categories[0] +', '+ movies[index].categories[1] +'</p><p id="release_date">'+ movies[index].relase_date +'</p></div></div>';
+	$(".movies").html(all_movie);
+}
+
+//ha mar egy kategoria ki van jelolve akkor mar a nem kedvelt kategoriakban ne lehessen
+//nem mukodik meg
+
+$('input[name="like"]').change(function() {
+
+	//dislike_id = 'dislike_' + $('input[name="like"]:checked').attr('id');
+	//$(dislike_id).addClass("liked");
+	console.log($('input[name="like"]:checked').attr('id'))
+
 });
-*/
 
-function fillCategories() {
-	let likecategory_div = ""
-	let dislikecategory_div = ""
-	for (let i = 0; i < categories.length; i++) {
-		const category = categories[i];
-		let like_html = '<input type="checkbox" name="' + category + '" id="' + category + '">' + '<label for="' + category + '">' + category + '</label>'
-		let dislike__html = '<input type="checkbox"  class="dislike" name="' + category + '" id="' + category + '">' + '<label for="' + category + '">' + category + '</label>'
-		likecategory_div = likecategory_div + like_html
-		dislikecategory_div = dislikecategory_div + dislike__html
-	}
-	//console.log(categories_div)
-	document.getElementsByClassName("like")[0].getElementsByClassName("checkbox-container")[0].innerHTML = likecategory_div;
-	document.getElementsByClassName("dislike")[0].getElementsByClassName("checkbox-container")[0].innerHTML = dislikecategory_div;
-}
+//kivalasztott kategoriak megejelenitese
+//felig mukodik. ha egy film mind a ket kategoriat tratalmazza, akkor 2x jelenik meg
 
-function getCheckBoxBool(checkbox) {
-	return document.querySelector(checkbox).value;
-}
+$('#done').click(function(event) {
 
-function setFilms() {
-	$.getJSON('filmek.json', (data) => {
-		const markup = data.items
-		  .map(item => `<li>${item.key}: ${item.value}</li>`)
-		  .join('');
-  
-		const list = $('<ul />').html(markup);
-  
-		$showData.html(list);
-  
-		$raw.text(JSON.stringify(data, undefined, 2));
-	  });
+	filtered_movie = "";
 
-	/*
-	for (let i = 0; i < films.length; i++) {
-		const name = films[i];
-		const img_src = films[i]["img"]
-		films[i].forEach(element => {
-			if (element != "img") {
-				if (getCheckBoxBool(element)) {
-					console.log(element)
-				}
+	event.preventDefault();
+
+    like = $('input[name="like"]:checked').map(function(){
+      return $(this).val();
+    }).get();
+
+
+	for (let index = 0; index < movies.length; index++) {
+		for (let liked_movies = 0; liked_movies < like.length; liked_movies++) {
+			if (movies[index].categories[0] == like[liked_movies] || movies[index].categories[1] == like[liked_movies]) {
+				filtered_movie += '<div class="movie_card" data-href="'+ movies[index].link +'"><img src="'+ movies[index].img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movies[index].title +'</b><p id="category">'+ movies[index].categories[0] +', '+ movies[index].categories[1] +'</p><p id="release_date">'+ movies[index].relase_date +'</p></div></div>';
 			}
-		});
+		}
 	}
-	*/
-}
 
-window.onload = function() {
-    console.log('hey');
+	$(".movies").html(filtered_movie);
 
-	fillCategories()
-	setFilms()
-};
+});
+
+//link_megnyitása
+
+jQuery(document).ready(function($) {
+	$(".movie_card").click(function() {
+		window.location = $(this).data("href");
+	});
+});
