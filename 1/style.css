@@ -1,0 +1,35 @@
+body {
+    text-align: center;
+    color: white;
+    background-color: black;
+}
+
+ul {
+    text-align: center;
+    list-style-position: inside;
+}
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+a {
+    color: gray;
+}
+
+a:hover {
+    color: hotpink;
+}
+
+a:visited {
+    color:lime;
+}
+
+#hidden {
+    color: black;
+}
+
+.bioText {
+    display: none;
+}

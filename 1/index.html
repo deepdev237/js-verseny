@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>uncaught TypeError</title>
+</head>
+<body>
+    <h1>Az Uncaught TypeError csapata</h1>
+    <h1><a href="">Miskolci SZC Kandó Kálmán Informatikai Technikum <img src="https://media.discordapp.net/attachments/795352960325910549/1025843221592547438/unknown.png" alt=""></a></h1>
+    <h1>A jelenlegi dátum: <span id='date-time'></span>.</h1>
+    <script>
+        setInterval(() =>{
+            var dt = new Date();
+            document.getElementById('date-time').innerHTML=dt;
+        }, 1000)
+    </script>
+    <h2>Tagok</h2>
+    <h3>Felkészítő tanár(ok):</h3>
+    <ul><li>Kasza László Róbert 👑</li></ul>
+    <h3>Versenyzők:</h3>
+    <ul>
+        <li>Glonczi Tamás</li>
+        <img src="https://media.discordapp.net/attachments/795352960325910549/1025839793151692820/unknown.png" alt="Glonczi T.">
+        <button onclick="tamasFunction()" type="button" id="tamasButton">Tamas bio</button>
+        <li>Luczi Alex</li>
+        <img src="https://cdn.discordapp.com/attachments/795352960325910549/1025840605240230039/image0.jpg" alt="" title="Luczi A.">
+        <button onclick="alexFunction()" type="button" id="alexButton">Alex bio</button>
+        <li>Dluhi Dániel</li>
+        <img src="https://cdn.discordapp.com/attachments/795352960325910549/1025842241543077908/image0.jpg" alt="Dluhi D.">
+        <button onclick="daniFunction()" type="button" id="daniButton">Dani bio</button>
+    </ul>
+    <p class="bioText" id="tamasText">BEGIN NPC DIALOG...: Szia! Tamasnak hivnak. (BlahBlahBlahBlahBlah)</p>
+    <p class="bioText" id="alexText">Szia! Alexnek hivnak. (BlahBlahBlahBlahBlah)</p>
+    <p class="bioText" id="daniText">Szia! Daninak hivnak. (BlahBlahBlahBlahBlah)</p>
+    <p class="bioText" id="hidden">Low Effort Gang (╯°□°）╯︵ ┻━┻</p>
+</body>
+</html>
+<script src="script.js"></script>
