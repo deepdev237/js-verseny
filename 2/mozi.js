@@ -25,7 +25,8 @@ $('input[name="like"]').change(function() {
 	//dislike_id = 'dislike_' + $('input[name="like"]:checked').attr('id');
 	//$(dislike_id).addClass("liked");
 	console.log($('input[name="like"]:checked').attr('id'))
-
+	console.log(this)
+	console.log(input($(this).val()))
 });
 
 //kivalasztott kategoriak megejelenitese
@@ -38,7 +39,7 @@ $('#done').click(function(event) {
 	event.preventDefault();
 
     like = $('input[name="like"]:checked').map(function(){
-      return $(this).val();
+	return $(this).val();
     }).get();
 
 
