@@ -8,25 +8,67 @@ const movie5 = {title: "Countdown", categories: ["Horror", "Thriller"], relase_d
 const movie6 = {title: "No Time to Die", categories: ["Akció", "Thriller"], relase_date: "2021. szeptember 30.", img: "https://m.media-amazon.com/images/M/MV5BYWQ2NzQ1NjktMzNkNS00MGY1LTgwMmMtYTllYTI5YzNmMmE0XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg", link: "https://www.imdb.com/title/tt2382320/"};
 const movies = [movie1, movie2, movie3, movie4, movie5, movie6];
 
-//ha mar egy kategoria ki van jelolve akkor mar a nem kedvelt kategoriakban ne lehessen
-//nem mukodik meg
+function GetLikedCategories(){
+	let x = $('input[name="like"]:checked').map(function(){return $(this).val();}).get();
+	return x
+}
 
+function GetDislikedCategories(){
+	let x = $('input[name="dislike"]:checked').map(function(){return $(this).val();}).get();
+	return x
+}
+
+lastLiked = '';
 $('input[name="like"]').change(function() {
-	category = $('input[name="like"]:checked').attr('id')
+	let category = $('input[name="like"]:checked').attr('id')
 
-	dislike_category = '#' + 'dislike_' + category
-	$(dislike_category).prop( "checked", false );
+	if (category === undefined) {
+		console.log('undefinedundefined')
+		category = lastLiked
+	}
 
-	//category_label = document.getElementById(category).labels[0].textContent
+	if (category) {
+		lastLiked = category
+		let category_label = document.getElementById(category).labels[0].textContent
+		let dislikes = GetDislikedCategories()
+		for (let i = 0; i < dislikes.length; i++) {
+			let disliked_category = dislikes[i];
+			
+			if (disliked_category == category_label) {
+				let dislike_category = '#' + 'dislike_' + category
+				$(dislike_category).prop( "checked", false );
+			}
+		}
+	} else {
+		console.log('no category')
+	}
 });
 
+lastDisliked = '';
 $('input[name="dislike"]').change(function() {
-	category = $('input[name="dislike"]:checked').attr('id')
-	
-	like_category = category.slice(8)
-	$('#' + like_category).prop( "checked", false );
+	let category = $('input[name="dislike"]:checked').attr('id')
 
-	//category_label = document.getElementById(category).labels[0].textContent
+	if (category === undefined) {
+		console.log('undefinedundefined')
+		category = lastDisliked
+	}
+
+	if (category) {
+		lastDisliked = category
+		let category_label = document.getElementById(category).labels[0].textContent
+		let likes = GetLikedCategories()
+		for (let i = 0; i < likes.length; i++) {
+			let disliked_category = likes[i];
+			console.log(disliked_category)
+			console.log(category_label)
+			if (disliked_category == category_label) {
+				let like_category = '#' + category.slice(8)
+				$(like_category).prop( "checked", false );
+			}
+		}
+	} else {
+		console.log('no category')
+	}
 });
 
 //kivalasztott kategoriak megejelenitese
@@ -35,8 +77,8 @@ $('input[name="dislike"]').change(function() {
 $('#done').click(function(event) {
 	event.preventDefault();
 
-    let likes = $('input[name="like"]:checked').map(function(){return $(this).val();}).get();
-	let dislikes = $('input[name="dislike"]:checked').map(function(){return $(this).val();}).get();
+    let likes = GetLikedCategories();
+	let dislikes = GetDislikedCategories();
 
 	let filtered_movies = "";
 
@@ -50,7 +92,7 @@ $('#done').click(function(event) {
 
 			for (let i = 0; i < likes.length; i++) { // loop through liked categories
 				let liked_category = likes[i];
-				if (category == liked_category) { // if the category is liked
+				if (category === liked_category) { // if the category is liked
 					show_movie = true;
 					continue;
 				}
@@ -58,7 +100,7 @@ $('#done').click(function(event) {
 
 			for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
 				let disliked_category = dislikes[i];
-				if (category == disliked_category) { // if the category is disliked
+				if (category === disliked_category) { // if the category is disliked
 					show_movie = false;
 					continue;
 				}
