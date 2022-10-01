@@ -8,25 +8,27 @@ const movie5 = {title: "Countdown", categories: ["Horror", "Thriller"], relase_d
 const movie6 = {title: "No Time to Die", categories: ["Akció", "Thriller"], relase_date: "2021. szeptember 30.", img: "https://m.media-amazon.com/images/M/MV5BYWQ2NzQ1NjktMzNkNS00MGY1LTgwMmMtYTllYTI5YzNmMmE0XkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg", link: "https://www.imdb.com/title/tt2382320/"};
 const movies = [movie1, movie2, movie3, movie4, movie5, movie6];
 
-//oesszes film megjelenitese
-
-all_movie = '';
-
-for (let index = 0; index < movies.length; index++) {
-	all_movie += '<div class="movie_card" data-href="'+ movies[index].link +'"><img src="'+ movies[index].img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movies[index].title +'</b><p id="category">'+ movies[index].categories[0] +', '+ movies[index].categories[1] +'</p><p id="release_date">'+ movies[index].relase_date +'</p></div></div>';
-	$(".movies").html(all_movie);
-}
-
 //ha mar egy kategoria ki van jelolve akkor mar a nem kedvelt kategoriakban ne lehessen
 //nem mukodik meg
 
 $('input[name="like"]').change(function() {
+	category = $('input[name="like"]:checked').attr('id')
 
-	//dislike_id = 'dislike_' + $('input[name="like"]:checked').attr('id');
-	//$(dislike_id).addClass("liked");
-	console.log($('input[name="like"]:checked').attr('id'))
-	console.log(this)
-	console.log(input($(this).val()))
+	dislike_category = '#' + 'dislike_' + category
+	$(dislike_category).prop( "checked", false );
+
+	category_label = document.getElementById(category).labels[0].textContent
+});
+
+$('input[name="dislike"]').change(function() {
+	category = $('input[name="dislike"]:checked').attr('id')
+	console.log(category)
+
+	like_category = category.slice(8)
+	console.log(like_category)
+	$('#' + like_category).prop( "checked", false );
+
+	category_label = document.getElementById(category).labels[0].textContent
 });
 
 //kivalasztott kategoriak megejelenitese
@@ -42,6 +44,7 @@ $('#done').click(function(event) {
 	return $(this).val();
     }).get();
 
+	console.log(like)
 
 	for (let index = 0; index < movies.length; index++) {
 		for (let liked_movies = 0; liked_movies < like.length; liked_movies++) {
@@ -61,4 +64,13 @@ jQuery(document).ready(function($) {
 	$(".movie_card").click(function() {
 		window.location = $(this).data("href");
 	});
+
+	//összes film megjelenitese
+
+	all_movie = '';
+
+	for (let index = 0; index < movies.length; index++) {
+		all_movie += '<div class="movie_card" data-href="'+ movies[index].link +'"><img src="'+ movies[index].img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movies[index].title +'</b><p id="category">'+ movies[index].categories[0] +', '+ movies[index].categories[1] +'</p><p id="release_date">'+ movies[index].relase_date +'</p></div></div>';
+		$(".movies").html(all_movie);
+	}
 });
