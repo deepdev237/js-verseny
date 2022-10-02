@@ -158,10 +158,7 @@ $('#done').click(function(event) {
 					cats += category + ', '
 				}
 			});
-			movie.categories.forEach(category => {
-				
-			});
-			
+
 			filtered_movies += '<div class="movie_card" data-href="'+ movie.link +'"><img src="'+ movie.img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movie.title +'</b><p id="category">'+ cats +'</p><p id="release_date">'+ movie.relase_date +'</p></div></div>';
 		}
 	});
