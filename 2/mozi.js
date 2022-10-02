@@ -146,10 +146,6 @@ $('#done').click(function(event) {
 	}
 
 	$(".movies").html(filtered_movies);
-
-	if (likes.length <= 0 && dislikes.length <= 0) {
-		ShowAllMovies()
-	}
 });
 
 //link_megnyitása
