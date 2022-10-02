@@ -31,17 +31,13 @@ function GetDislikedCategories(){
 }
 
 var categories = []
-for (let i = 0; i < movies.length; i++) {
-	const movie = movies[i];
-
-	for (let mc = 0; mc < movie.categories.length; mc++) {
-		const category = movie.categories[mc];
-
+movies.forEach(movie => {
+	movie.categories.forEach(category => {
 		if (!categories.includes(category)) {
 			categories.push(category)
 		}
-	}
-}
+	});
+});
 
 //fill_categories
 
@@ -63,14 +59,12 @@ $('input[name="like"]').change(function() {
 		lastLiked = category
 		let category_label = document.getElementById(category).labels[0].textContent
 		let dislikes = GetDislikedCategories()
-		for (let i = 0; i < dislikes.length; i++) {
-			let disliked_category = dislikes[i];
-			
+		dislikes.forEach(disliked_category => {
 			if (disliked_category == category_label) {
 				let dislike_category = '#' + 'dislike_' + category
 				$(dislike_category).prop( "checked", false );
 			}
-		}
+		});
 	} else {
 		console.log('no category')
 	}
@@ -89,15 +83,14 @@ $('input[name="dislike"]').change(function() {
 		lastDisliked = category
 		let category_label = document.getElementById(category).labels[0].textContent
 		let likes = GetLikedCategories()
-		for (let i = 0; i < likes.length; i++) {
-			let disliked_category = likes[i];
+		likes.forEach(disliked_category => {
 			console.log(disliked_category)
 			console.log(category_label)
 			if (disliked_category == category_label) {
 				let like_category = '#' + category.slice(8)
 				$(like_category).prop( "checked", false );
 			}
-		}
+		});
 	} else {
 		console.log('no category')
 	}
@@ -115,14 +108,12 @@ $('#done').click(function(event) {
 	let filtered_movies = "";
 
 	let movie;
-	for (let index = 0; index < movies.length; index++) { // loop through movies
-		movie = movies[index];
+	movies.forEach(movie => { // loop through movies
 		let show_movie = true;
 		let liked = false
 		let disliked = false
 
-		for (let i = 0; i < likes.length; i++) { // loop through liked categories
-			let liked_category = likes[i];
+		likes.forEach(liked_category => {
 			for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
 				let category = movie.categories[c];
 				if (category === liked_category) { // if the category is liked
@@ -130,10 +121,9 @@ $('#done').click(function(event) {
 					break;
 				}
 			}
-		}
+		});
 
-		for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
-			let disliked_category = dislikes[i];
+		dislikes.forEach(disliked_category => {
 			for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
 				let category = movie.categories[c];
 				if (category === disliked_category) { // if the category is disliked
@@ -141,8 +131,8 @@ $('#done').click(function(event) {
 					break;
 				}
 			}
-		}
-		
+		});
+
 		//console.log(dislikes.length)
 		if (liked && disliked) {
 			show_movie = false
@@ -161,19 +151,20 @@ $('#done').click(function(event) {
 		if (show_movie) {
 			let cats = ''
 			
-			for (let i = 0; i < movie.categories.length; i++) {
-				const category = movie.categories[i];
-
-				if ((i + 1) == movie.categories.length) { // if it's at the end
+			movie.categories.forEach(function(category, idx, array){
+				if (idx === array.length - 1) { // if it's at the end
 					cats += category
 				} else {
 					cats += category + ', '
 				}
+			});
+			movie.categories.forEach(category => {
 				
-			}
+			});
+			
 			filtered_movies += '<div class="movie_card" data-href="'+ movie.link +'"><img src="'+ movie.img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movie.title +'</b><p id="category">'+ cats +'</p><p id="release_date">'+ movie.relase_date +'</p></div></div>';
 		}
-	}
+	});
 
 	$(".movies").html(filtered_movies);
 });
