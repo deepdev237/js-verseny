@@ -30,16 +30,6 @@ function GetDislikedCategories(){
 	return x
 }
 
-function ShowAllMovies(){
-	//összes film megjelenitese
-	all_movie = '';
-
-	for (let index = 0; index < movies.length; index++) {
-		all_movie += '<div class="movie_card" data-href="'+ movies[index].link +'"><img src="'+ movies[index].img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movies[index].title +'</b><p id="category">'+ movies[index].categories[0] +', '+ movies[index].categories[1] +'</p><p id="release_date">'+ movies[index].relase_date +'</p></div></div>';
-		$(".movies").html(all_movie);
-	}
-}
-
 var categories = []
 for (let i = 0; i < movies.length; i++) {
 	const movie = movies[i];
@@ -195,7 +185,7 @@ $('#done').click(function(event) {
 				if ((i + 1) == movie.categories.length) { // if it's at the end
 					cats += category
 				} else {
-					cats += category +', '
+					cats += category + ', '
 				}
 				
 			}
@@ -214,5 +204,6 @@ jQuery(document).ready(function($) {
 	});
 
 	//fillCategories()
-	ShowAllMovies()
+	//ShowAllMovies()
+	$('#done').click();
 });
