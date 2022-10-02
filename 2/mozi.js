@@ -116,6 +116,8 @@ $('input[name="dislike"]').change(function() {
 		let likes = GetLikedCategories()
 		for (let i = 0; i < likes.length; i++) {
 			let disliked_category = likes[i];
+			console.log(disliked_category)
+			console.log(category_label)
 			if (disliked_category == category_label) {
 				let like_category = '#' + category.slice(8)
 				$(like_category).prop( "checked", false );
@@ -172,16 +174,13 @@ $('#done').click(function(event) {
 		} else if(disliked) {
 			show_movie = false
 		} else if (liked) {
-			console.log(disliked)
 			show_movie = true
 		} else if (likes.length == 0 && dislikes.length == 0) {
 			show_movie = true
+		} else if (!liked && likes.length > 0) {
+			show_movie = false
 		} else if (!disliked && !liked) {
-			if (likes.length == 0) {
-				show_movie = true
-			} else {
-				show_movie = false
-			}
+			show_movie = true
 		}
 
 		if (show_movie) {
