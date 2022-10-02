@@ -42,38 +42,13 @@ for (let i = 0; i < movies.length; i++) {
 		}
 	}
 }
-console.log(categories)
 
-/* for now (label:id problem)
-function fillCategories(){
-	//get categories from movies
-	var categories = []
-	for (let i = 0; i < movies.length; i++) {
-		const movie = movies[i];
+//fill_categories
 
-		for (let mc = 0; mc < movie.categories.length; mc++) {
-			const category = movie.categories[mc];
-
-			if (!categories.includes(category)) {
-				categories.push(category)
-			}
-		}
-	}
-
-	let likecategory_div = ""
-	let dislikecategory_div = ""
-	for (let i = 0; i < categories.length; i++) {
-		const category = categories[i];
-		let like_html = '<input type="checkbox" name="' + category + '" id="like">' + '<label for="' + category + '">' + category + '</label>'
-		let dislike__html = '<input type="checkbox" name="' + category + '" id="' + category + '">' + '<label for="' + category + '">' + category + '</label>'
-		likecategory_div = likecategory_div + like_html
-		dislikecategory_div = dislikecategory_div + dislike__html
-	}
-
-	$("div.like.div.checkbox-container").html(like_html);
-	$("div.dislike.div.checkbox-container").html(like_html);
-}
-*/
+categories.forEach(category => {
+	$('.like_container').append('<input type="checkbox" name="like" id="' + category + '" value="' + category + '"> <label for="' + category + '">' + category + '</label>');
+	$('.dislike_container').append('<input type="checkbox" name="dislike" id="dislike_' + category + '" value="' + category + '"> <label for="dislike_' + category + '">' + category + '</label>');
+});
 
 lastLiked = '';
 $('input[name="like"]').change(function() {
