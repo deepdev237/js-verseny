@@ -3,6 +3,7 @@
 //template
 //movies.push({title: "", categories: ["", ""], relase_date: "", img: "", link: ""})
 
+const categories = ["Akció", "Kaland", "Thriller", "Sci-Fi", "Vígjáték", "Horror", "Politikai szatíra", "Romantikus", "Dráma"]
 var movies = []
 movies.push({title: "Mission: Impossible", categories: ["Akció", "Kaland", "Thriller"], relase_date: "1996. május 22.", img: "https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg", link: "https://www.imdb.com/title/tt0117060/"});
 movies.push({title: "Ready Player One", categories: ["Akció", "Sci-Fi"], relase_date: "2018. március 29.", img: "https://m.media-amazon.com/images/M/MV5BY2JiYTNmZTctYTQ1OC00YjU4LWEwMjYtZjkwY2Y5MDI0OTU3XkEyXkFqcGdeQXVyNTI4MzE4MDU@._V1_.jpg", link: "https://www.imdb.com/title/tt1677720/"});
@@ -32,7 +33,6 @@ function GetDislikedCategories(){
 
 function ShowAllMovies(){
 	//összes film megjelenitese
-
 	all_movie = '';
 
 	for (let index = 0; index < movies.length; index++) {
@@ -102,6 +102,7 @@ $('#done').click(function(event) {
 
     let likes = GetLikedCategories();
 	let dislikes = GetDislikedCategories();
+	console.log(dislikes)
 
 	let filtered_movies = "";
 
@@ -112,21 +113,30 @@ $('#done').click(function(event) {
 
 		for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
 			let category = movie.categories[c];
+			let liked = false
+			let disliked = false
 
 			for (let i = 0; i < likes.length; i++) { // loop through liked categories
 				let liked_category = likes[i];
 				if (category === liked_category) { // if the category is liked
-					show_movie = true;
+					liked = true;
 					continue;
 				}
 			}
-			
 			for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
 				let disliked_category = dislikes[i];
 				if (category === disliked_category) { // if the category is disliked
-					show_movie = false;
+					disliked = true;
 					continue;
 				}
+			}
+
+			if (liked){
+				show_movie = true
+			} else if (disliked) {
+				show_movie = false
+			} else {
+				show_movie = true
 			}
 		}
 
@@ -136,6 +146,10 @@ $('#done').click(function(event) {
 	}
 
 	$(".movies").html(filtered_movies);
+
+	if (likes.length <= 0 && dislikes.length <= 0) {
+		ShowAllMovies()
+	}
 });
 
 //link_megnyitása
