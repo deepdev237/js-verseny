@@ -129,7 +129,6 @@ $('input[name="dislike"]').change(function() {
 });
 
 //kivalasztott kategoriak megejelenitese
-//felig mukodik. ha egy film mind a ket kategoriat tratalmazza, akkor 2x jelenik meg
 
 $('#done').click(function(event) {
 	event.preventDefault();
@@ -204,6 +203,5 @@ jQuery(document).ready(function($) {
 	});
 
 	//fillCategories()
-	//ShowAllMovies()
 	$('#done').click();
 });
