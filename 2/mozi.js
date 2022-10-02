@@ -3,7 +3,6 @@
 //template
 //movies.push({title: "", categories: ["", ""], relase_date: "", img: "", link: ""})
 
-const categories = ["Akció", "Kaland", "Thriller", "Sci-Fi", "Vígjáték", "Horror", "Politikai szatíra", "Romantikus", "Dráma"]
 var movies = []
 movies.push({title: "Mission: Impossible", categories: ["Akció", "Kaland", "Thriller"], relase_date: "1996. május 22.", img: "https://upload.wikimedia.org/wikipedia/en/e/e1/MissionImpossiblePoster.jpg", link: "https://www.imdb.com/title/tt0117060/"});
 movies.push({title: "Ready Player One", categories: ["Akció", "Sci-Fi"], relase_date: "2018. március 29.", img: "https://m.media-amazon.com/images/M/MV5BY2JiYTNmZTctYTQ1OC00YjU4LWEwMjYtZjkwY2Y5MDI0OTU3XkEyXkFqcGdeQXVyNTI4MzE4MDU@._V1_.jpg", link: "https://www.imdb.com/title/tt1677720/"});
@@ -40,6 +39,51 @@ function ShowAllMovies(){
 		$(".movies").html(all_movie);
 	}
 }
+
+var categories = []
+for (let i = 0; i < movies.length; i++) {
+	const movie = movies[i];
+
+	for (let mc = 0; mc < movie.categories.length; mc++) {
+		const category = movie.categories[mc];
+
+		if (!categories.includes(category)) {
+			categories.push(category)
+		}
+	}
+}
+console.log(categories)
+
+/* for now (label:id problem)
+function fillCategories(){
+	//get categories from movies
+	var categories = []
+	for (let i = 0; i < movies.length; i++) {
+		const movie = movies[i];
+
+		for (let mc = 0; mc < movie.categories.length; mc++) {
+			const category = movie.categories[mc];
+
+			if (!categories.includes(category)) {
+				categories.push(category)
+			}
+		}
+	}
+
+	let likecategory_div = ""
+	let dislikecategory_div = ""
+	for (let i = 0; i < categories.length; i++) {
+		const category = categories[i];
+		let like_html = '<input type="checkbox" name="' + category + '" id="like">' + '<label for="' + category + '">' + category + '</label>'
+		let dislike__html = '<input type="checkbox" name="' + category + '" id="' + category + '">' + '<label for="' + category + '">' + category + '</label>'
+		likecategory_div = likecategory_div + like_html
+		dislikecategory_div = dislikecategory_div + dislike__html
+	}
+
+	$("div.like.div.checkbox-container").html(like_html);
+	$("div.dislike.div.checkbox-container").html(like_html);
+}
+*/
 
 lastLiked = '';
 $('input[name="like"]').change(function() {
@@ -102,14 +146,14 @@ $('#done').click(function(event) {
 
     let likes = GetLikedCategories();
 	let dislikes = GetDislikedCategories();
-	console.log(dislikes)
+	//console.log(dislikes)
 
 	let filtered_movies = "";
 
 	let movie;
 	for (let index = 0; index < movies.length; index++) { // loop through movies
 		movie = movies[index];
-		let show_movie = false;
+		let show_movie = true;
 
 		for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
 			let category = movie.categories[c];
@@ -120,28 +164,42 @@ $('#done').click(function(event) {
 				let liked_category = likes[i];
 				if (category === liked_category) { // if the category is liked
 					liked = true;
-					continue;
+					break;
 				}
 			}
 			for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
 				let disliked_category = dislikes[i];
+				console.log(category)
+				console.log(disliked_category)
 				if (category === disliked_category) { // if the category is disliked
 					disliked = true;
-					continue;
+					break;
 				}
 			}
-
-			if (liked){
-				show_movie = true
-			} else if (disliked) {
+			//console.log(dislikes.length)
+			if (disliked) {
 				show_movie = false
-			} else {
+			} else if (liked) {
+				show_movie = true
+			} else if (likes.length == 0 && dislikes.length == 0) {
 				show_movie = true
 			}
 		}
 
 		if (show_movie) {
-			filtered_movies += '<div class="movie_card" data-href="'+ movie.link +'"><img src="'+ movie.img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movie.title +'</b><p id="category">'+ movie.categories[0] +', '+ movie.categories[1] +'</p><p id="release_date">'+ movie.relase_date +'</p></div></div>';
+			let cats = ''
+			
+			for (let i = 0; i < movie.categories.length; i++) {
+				const category = movie.categories[i];
+
+				if ((i + 1) == movie.categories.length) { // if it's at the end
+					cats += category
+				} else {
+					cats += category +', '
+				}
+				
+			}
+			filtered_movies += '<div class="movie_card" data-href="'+ movie.link +'"><img src="'+ movie.img +'" alt=""><div class="img_shadow"></div><div class="movie_card-details"><b>'+ movie.title +'</b><p id="category">'+ cats +'</p><p id="release_date">'+ movie.relase_date +'</p></div></div>';
 		}
 	}
 
@@ -155,5 +213,6 @@ jQuery(document).ready(function($) {
 		window.location = $(this).data("href");
 	});
 
+	//fillCategories()
 	ShowAllMovies()
 });
