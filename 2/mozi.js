@@ -169,8 +169,8 @@ $('#done').click(function(event) {
 			}
 			for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
 				let disliked_category = dislikes[i];
-				console.log(category)
-				console.log(disliked_category)
+				//console.log(category)
+				//console.log(disliked_category)
 				if (category === disliked_category) { // if the category is disliked
 					disliked = true;
 					break;
