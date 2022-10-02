@@ -5,16 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>uncaught TypeError</title>
+    <title>Uncaught TypeError</title>
 </head>
 <body>
     <h1>Az Uncaught TypeError csapata</h1>
     <h1><a href="https://www.kkszki.hu/">Miskolci SZC Kandó Kálmán Informatikai Technikum <img src="https://media.discordapp.net/attachments/795352960325910549/1025843221592547438/unknown.png" alt=""></a></h1>
-    <h1>A jelenlegi dátum: <span id='date-time'></span>.</h1>
+    <h1>Pontos idő: <span id='date-time'></span>.</h1>
     <script>
         setInterval(() =>{
             var dt = new Date();
-            document.getElementById('date-time').innerHTML=dt;
+            document.getElementById('date-time').innerHTML=dt.toLocaleTimeString();
         }, 1000)
     </script>
     <h2>Tagok</h2>
@@ -35,7 +35,7 @@
     <p class="bioText" id="tamasText">BEGIN NPC DIALOG...: Szia! Tamasnak hivnak. (BlahBlahBlahBlahBlah)</p>
     <p class="bioText" id="alexText">Szia! Alexnek hivnak. (BlahBlahBlahBlahBlah)</p>
     <p class="bioText" id="daniText">Szia! Daninak hivnak. (BlahBlahBlahBlahBlah)</p>
-    <p id="hidden">Low Effort Gang (╯°□°）╯︵ ┻━┻</p>
+    <p id="hidden">Low Effort Gang (╯°□°）╯︵ ┻━┻ (légyszi Alex a css nagyon gyatra!)</p>
 </body>
 </html>
 <script src="script.js"></script>
