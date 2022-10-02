@@ -50,57 +50,28 @@ categories.forEach(category => {
 	$('.dislike_container').append('<input type="checkbox" name="dislike" id="dislike_' + category + '" value="' + category + '"> <label for="dislike_' + category + '">' + category + '</label>');
 });
 
-lastLiked = '';
-$('input[name="like"]').change(function() {
-	let category = $('input[name="like"]:checked').attr('id')
+//disable_categories
 
-	if (category === undefined) {
-		console.log('undefinedundefined')
-		category = lastLiked
-	}
+$('input[type="checkbox"]').change(function(event) {
 
-	if (category) {
-		lastLiked = category
-		let category_label = document.getElementById(category).labels[0].textContent
-		let dislikes = GetDislikedCategories()
-		for (let i = 0; i < dislikes.length; i++) {
-			let disliked_category = dislikes[i];
-			
-			if (disliked_category == category_label) {
-				let dislike_category = '#' + 'dislike_' + category
-				$(dislike_category).prop( "checked", false );
-			}
-		}
-	} else {
-		console.log('no category')
-	}
-});
+	event.preventDefault();
 
-lastDisliked = '';
-$('input[name="dislike"]').change(function() {
-	let category = $('input[name="dislike"]:checked').attr('id')
+    like = $('input[name="like"]:checked').map(function(){
+      return $(this).val();
+    }).get();
 
-	if (category === undefined) {
-		console.log('undefinedundefined')
-		category = lastDisliked
-	}
+	dislike = $('input[name="dislike"]:checked').map(function(){
+		return $(this).val();
+	  }).get();
 
-	if (category) {
-		lastDisliked = category
-		let category_label = document.getElementById(category).labels[0].textContent
-		let likes = GetLikedCategories()
-		for (let i = 0; i < likes.length; i++) {
-			let disliked_category = likes[i];
-			console.log(disliked_category)
-			console.log(category_label)
-			if (disliked_category == category_label) {
-				let like_category = '#' + category.slice(8)
-				$(like_category).prop( "checked", false );
-			}
-		}
-	} else {
-		console.log('no category')
-	}
+	like.forEach(like => {
+		$('label[for="dislike_' + like + '"]').addClass("disable");
+	});
+
+	dislike.forEach(dislike => {
+		$("label[for='" + dislike + "']").addClass("disable");
+	});
+
 });
 
 //kivalasztott kategoriak megejelenitese

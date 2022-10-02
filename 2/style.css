@@ -85,6 +85,10 @@ main .content .categories input[type = 'checkbox'] {
     display: none;
 }
 
+main .content .categories .disable {
+    display: none;
+}
+
 main .content .categories label {
     cursor: pointer;
     color: white;
