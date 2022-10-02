@@ -143,35 +143,52 @@ $('#done').click(function(event) {
 	for (let index = 0; index < movies.length; index++) { // loop through movies
 		movie = movies[index];
 		let show_movie = true;
+		let liked = false
+		let disliked = false
 
-		for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
-			let category = movie.categories[c];
-			let liked = false
-			let disliked = false
-
-			for (let i = 0; i < likes.length; i++) { // loop through liked categories
-				let liked_category = likes[i];
+		for (let i = 0; i < likes.length; i++) { // loop through liked categories
+			let liked_category = likes[i];
+			for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
+				let category = movie.categories[c];
 				if (category === liked_category) { // if the category is liked
 					liked = true;
 					break;
 				}
 			}
-			for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
-				let disliked_category = dislikes[i];
-				//console.log(category)
-				//console.log(disliked_category)
+		}
+
+		for (let i = 0; i < dislikes.length; i++) { // loop through disliked categories
+			let disliked_category = dislikes[i];
+			for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
+				let category = movie.categories[c];
 				if (category === disliked_category) { // if the category is disliked
 					disliked = true;
 					break;
 				}
 			}
-			//console.log(dislikes.length)
-			if (disliked) {
+		}
+		
+		//console.log(dislikes.length)
+		if (liked && disliked) {
+			show_movie = false
+			console.log('0')
+		} else if(disliked) {
+			show_movie = false
+			console.log('1')
+		} else if (liked) {
+			console.log(disliked)
+			show_movie = true
+			console.log('2 true')
+		} else if (likes.length == 0 && dislikes.length == 0) {
+			show_movie = true
+			console.log('3 true')
+		} else if (!disliked && !liked) {
+			if (likes.length == 0) {
+				show_movie = true
+				console.log('4 true')
+			} else {
 				show_movie = false
-			} else if (liked) {
-				show_movie = true
-			} else if (likes.length == 0 && dislikes.length == 0) {
-				show_movie = true
+				console.log('5')
 			}
 		}
 
