@@ -11,6 +11,6 @@ function ShowOrNot(element) {
 window.addEventListener('load', (event) => {
   setInterval(() =>{
     var dt = new Date();
-    document.getElementById('clock').innerHTML=dt.getHours() + ':' + dt.getMinutes();
+    document.getElementById('clock').innerHTML=dt.toLocaleTimeString();
 }, 1000)
 });
