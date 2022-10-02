@@ -1,26 +1,16 @@
-function tamasFunction() {
-    var text = document.getElementById("tamasText");
-    if (text.style.display === "block") {
-      text.style.display = "none";
-    } else {
-      text.style.display = "block";
-    }
+function ShowOrNot(element) {
+  element = element.id.slice(0, -6) + 'Text'
+  element = document.getElementById(element);
+  if (element.style.display === "block") {
+    element.style.display = "none";
+  } else {
+    element.style.display = "block";
+  }
 }
 
-function alexFunction() {
-    var text = document.getElementById("alexText");
-    if (text.style.display === "block") {
-      text.style.display = "none";
-    } else {
-      text.style.display = "block";
-    }
-}
-
-function daniFunction() {
-    var text = document.getElementById("daniText");
-    if (text.style.display === "block") {
-      text.style.display = "none";
-    } else {
-      text.style.display = "block";
-    }
-}
+window.addEventListener('load', (event) => {
+  setInterval(() =>{
+    var dt = new Date();
+    document.getElementById('clock').innerHTML=dt.getHours() + ':' + dt.getMinutes();
+}, 1000)
+});
