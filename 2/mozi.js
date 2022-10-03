@@ -48,30 +48,37 @@ categories.forEach(category => {
 
 lastLiked = '';
 $('input[name="like"]').change(function() {
-	let category = $('input[name="like"]:checked').attr('id')
-
-	if (category === undefined) {
-		console.log('undefinedundefined')
-		category = lastLiked
-	}
-
-	if (category) {
-		lastLiked = category
-		let category_label = document.getElementById(category).labels[0].textContent
-		let dislikes = GetDislikedCategories()
-		dislikes.forEach(disliked_category => {
-			if (disliked_category == category_label) {
-				let dislike_category = '#' + 'dislike_' + category
-				$(dislike_category).prop( "checked", false );
-			}
+	let dislikes = GetDislikedCategories()
+	let likes = GetLikedCategories()
+	dislikes.forEach(disliked_category => {
+		likes.forEach(like_category => {
+			console.log(disliked_category)
+			let dislike_category = '#' + 'dislike_' + like_category
+			$(dislike_category).prop( "checked", false );
 		});
-	} else {
-		console.log('no category')
-	}
+
+	});
 });
 
 lastDisliked = '';
 $('input[name="dislike"]').change(function() {
+	let dislikes = GetDislikedCategories()
+	let likes = GetLikedCategories()
+	dislikes.forEach(disliked_category => {
+		likes.forEach(liked_category => {
+			console.log(liked_category)
+			console.log(disliked_category)
+			let dislike_category = '#' + 'dislike_' + liked_category
+			if (liked_category == disliked_category) {
+				$('#' + liked_category).prop( "checked", false);
+				$(dislike_category).prop( "checked", true);
+			} else {
+				$(dislike_category).prop( "checked", false);
+			}
+			
+		});
+	});
+	/*
 	let category = $('input[name="dislike"]:checked').attr('id')
 
 	if (category === undefined) {
@@ -94,6 +101,7 @@ $('input[name="dislike"]').change(function() {
 	} else {
 		console.log('no category')
 	}
+	*/
 });
 
 //kivalasztott kategoriak megejelenitese
