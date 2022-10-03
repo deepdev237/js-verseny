@@ -146,7 +146,7 @@ $('#done').click(function(event) {
 //link_megnyitása
 
 jQuery(document).ready(function($) {
-	$(".movie_card").click(function() {
+	$("body").on("click", ".movie_card", function(){
 		window.location = $(this).data("href");
 	});
 
