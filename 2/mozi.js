@@ -52,7 +52,6 @@ $('input[name="like"]').change(function() {
 	let likes = GetLikedCategories()
 	dislikes.forEach(disliked_category => {
 		likes.forEach(like_category => {
-			console.log(disliked_category)
 			let dislike_category = '#' + 'dislike_' + like_category
 			$(dislike_category).prop( "checked", false );
 		});
@@ -66,8 +65,6 @@ $('input[name="dislike"]').change(function() {
 	let likes = GetLikedCategories()
 	dislikes.forEach(disliked_category => {
 		likes.forEach(liked_category => {
-			console.log(liked_category)
-			console.log(disliked_category)
 			let dislike_category = '#' + 'dislike_' + liked_category
 			if (liked_category == disliked_category) {
 				$('#' + liked_category).prop( "checked", false);
@@ -78,30 +75,6 @@ $('input[name="dislike"]').change(function() {
 			
 		});
 	});
-	/*
-	let category = $('input[name="dislike"]:checked').attr('id')
-
-	if (category === undefined) {
-		console.log('undefinedundefined')
-		category = lastDisliked
-	}
-
-	if (category) {
-		lastDisliked = category
-		let category_label = document.getElementById(category).labels[0].textContent
-		let likes = GetLikedCategories()
-		likes.forEach(disliked_category => {
-			console.log(disliked_category)
-			console.log(category_label)
-			if (disliked_category == category_label) {
-				let like_category = '#' + category.slice(8)
-				$(like_category).prop( "checked", false );
-			}
-		});
-	} else {
-		console.log('no category')
-	}
-	*/
 });
 
 //kivalasztott kategoriak megejelenitese
@@ -111,11 +84,9 @@ $('#done').click(function(event) {
 
     let likes = GetLikedCategories();
 	let dislikes = GetDislikedCategories();
-	//console.log(dislikes)
 
 	let filtered_movies = "";
 
-	let movie;
 	movies.forEach(movie => { // loop through movies
 		let show_movie = true;
 		let liked = false
@@ -141,7 +112,6 @@ $('#done').click(function(event) {
 			}
 		});
 
-		//console.log(dislikes.length)
 		if (liked && disliked) {
 			show_movie = false
 		} else if(disliked) {
@@ -181,6 +151,5 @@ jQuery(document).ready(function($) {
 		window.location = $(this).data("href");
 	});
 
-	//fillCategories()
 	$('#done').click();
 });
