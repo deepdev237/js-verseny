@@ -30,6 +30,7 @@ function GetDislikedCategories(){
 	return x
 }
 
+//get categories from movies
 var categories = []
 movies.forEach(movie => {
 	movie.categories.forEach(category => {
@@ -46,7 +47,6 @@ categories.forEach(category => {
 	$('.dislike_container').append('<input type="checkbox" name="dislike" id="dislike_' + category + '" value="' + category + '"> <label for="dislike_' + category + '">' + category + '</label>');
 });
 
-lastLiked = '';
 $('input[name="like"]').change(function() {
 	let dislikes = GetDislikedCategories()
 	let likes = GetLikedCategories()
@@ -59,7 +59,6 @@ $('input[name="like"]').change(function() {
 	});
 });
 
-lastDisliked = '';
 $('input[name="dislike"]').change(function() {
 	let dislikes = GetDislikedCategories()
 	let likes = GetLikedCategories()
