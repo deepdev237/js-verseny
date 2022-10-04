@@ -28,19 +28,49 @@ b span#logo span#red {
     color: rgba(215, 0, 0, 0.837);
 }
 
-/*header*/
+/*nav*/
 
-header {
+nav {
     background-color: rgba(79, 79, 79, 0.32);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.356);
     color: white;
     padding: 2%;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
-header h2 {
+nav h2 {
     text-transform: uppercase;
     text-align: center;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul {
+    float: right;
+    list-style: none;
+    position: relative;
+}
+
+nav ul li {
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    padding: .8em;
+    margin: 0 1em;
+    text-align: center;
+    background-color: rgba(79, 79, 79, 0.32);
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+nav ul li:hover {
+    background-color: rgba(176, 176, 176, 0.32);
 }
 
 /*main*/
@@ -157,9 +187,9 @@ main .content .movies .movie_card img {
 }
 
 main .content .movies .movie_card:hover img {
-    -ms-transform: scale(1.5); /* IE 9 */
-    -webkit-transform: scale(1.5); /* Safari 3-8 */
-    transform: scale(1.5); 
+    -ms-transform: scale(1.2);
+    -webkit-transform: scale(1.2); 
+    transform: scale(1.2);
 }
 
 main .content .movies .movie_card .img_shadow {
@@ -191,4 +221,36 @@ main .content .movies .movie_card .movie_card-details p#release_date {
     position: absolute;
     bottom: 10%;
     left: 10%;
+}
+
+@media screen and (max-width: 700px) {
+
+    /*main*/
+
+    main {
+        padding: 3em;
+    }
+
+    /*nav*/
+
+    nav {
+        padding: 5%;
+    }
+
+    nav h2 {
+        display: none;
+    }
+
+    nav ul {
+        float: center;
+    }
+
+    nav ul li {
+        margin: 0 1em;
+    }
+
+    nav ul li#on_that_site {
+        background-color: rgba(176, 176, 176, 0.32);
+    }
+
 }
