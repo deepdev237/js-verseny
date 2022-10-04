@@ -6,34 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
-    <title>uncaught TypeError</title>
+    <title>Uncaught TypeError: Bemutatkozó</title>
 </head>
 <body>
-    <h1>Az Uncaught TypeError csapata</h1>
-    <h1><a href="https://www.kkszki.hu/">Miskolci SZC Kandó Kálmán Informatikai Technikum <img src="https://media.discordapp.net/attachments/795352960325910549/1025843221592547438/unknown.png" alt=""></a></h1>
-    <h1>Pontos idő: <span id='clock'></span></h1>
-    <h2>Felkészítő tanár: Kasza László Róbert 👑</h2>
-    <h2>Versenyzők:</h2>
-    <div class="cards">
-        <div class="card">
-            <h2>Glonczi Tamás</h2>
-            <img src="https://media.discordapp.net/attachments/795352960325910549/1025839793151692820/unknown.png" alt="Glonczi T.">
-            <button onclick="ShowOrNot(this)" type="button" id="tamasButton">Tamás bio</button>
+    <nav>
+        <h2>Bemutatkozó</h2>
+        <ul>
+            <li id="on_that_site"><a href="../1/index.html">Bemutatkozó</a></li>
+            <li><a href="../2/index.html">Film ajánló</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="content">
+            <h1>Üdvözlünk a "Bemutatkozó"-ban!</h1>
+            <div class="introduction">
+                <b>Az oldalt az <span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span> csapata készítette.</b>
+            </div>
+            <div class="top-container">
+                <div class="school">
+                    <img src="https://media.discordapp.net/attachments/795352960325910549/1025843221592547438/unknown.png" alt="Miskolci SZC Kandó Kálmán Informatikai Technikum logó">
+                    <h1><a href="https://www.kkszki.hu/">Miskolci SZC Kandó Kálmán Informatikai Technikum</a></h1>
+                </div>
+                <h1 id='clock'></h1>
+                <h2>Felkészítő tanár: Kasza László Róbert 👑</h2>
+            </div>
+            <div class="img-container">
+                <div class="images">
+                    <h2>Nyomd meg a gombot!</h2>
+                    <!--<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg/2560px-Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg" alt="Kandó régen">
+                    <img src="https://docplayer.hu/docs-images/91/107316652/images/1-1.jpg" alt="Kandó most">
+                    <img src="https://minap.hu/sites/default/files/terv_kando1.jpg" alt="Kandó jövő">-->
+                </div>
+                <button type="button" id="imgButton">Képek</button>
+            </div>
+            <div class="group-container">
+                <h2><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span></h2>
+                <div class="people">
+                    <div class="person">
+                        <div class="img-frame"><img src="https://media.discordapp.net/attachments/795352960325910549/1025839793151692820/unknown.png" alt="Glonczi T."></div>
+                        <h3>Glonczi Tamás</h3>
+                        <button onclick="ShowOrNot(this)" type="button" id="tamasButton">Tamás bemutatkozó</button>
+                    </div>
+                    <div class="person">
+                        <div class="img-frame"><img src="https://cdn.discordapp.com/attachments/795352960325910549/1025840605240230039/image0.jpg" alt="Luczi A."></div>
+                        <h3>Luczi Alex</h3>
+                        <button onclick="ShowOrNot(this)" type="button" id="alexButton">Alex bemutatkozó</button>
+                    </div>
+                    <div class="person">
+                        <div class="img-frame"><img src="https://cdn.discordapp.com/attachments/795352960325910549/1025842241543077908/image0.jpg" alt="Dluhi D."></div>
+                        <h3>Dluhi Dániel</h3>
+                        <button onclick="ShowOrNot(this)" type="button" id="daniButton">Dani bemutatkozó</button>
+                    </div>
+                </div>
+                <div class="bio">
+                    <p class="bioText" id="tamasText">BEGIN NPC DIALOG...: Szia! Tamásnak hivnak. (BlahBlahBlahBlahBlah)</p>
+                    <p class="bioText" id="alexText">Szia! Alexnek hivnak. (BlahBlahBlahBlahBlah)</p>
+                    <p class="bioText" id="daniText">Szia! Daninak hivnak. (BlahBlahBlahBlahBlah)</p>
+                </div>
+            </div>
         </div>
-        <div class="card">
-            <h2>Luczi Alex</h2>
-            <img src="https://cdn.discordapp.com/attachments/795352960325910549/1025840605240230039/image0.jpg" alt="Luczi A.">
-            <button onclick="ShowOrNot(this)" type="button" id="alexButton">Alex bio</button>
-        </div>
-        <div class="card">
-            <h2>Dluhi Dániel</h2>
-            <img src="https://cdn.discordapp.com/attachments/795352960325910549/1025842241543077908/image0.jpg" alt="Dluhi D.">
-            <button onclick="ShowOrNot(this)" type="button" id="daniButton">Dani bio</button>
-        </div>
-    </div>
-    <p class="bioText" id="tamasText">BEGIN NPC DIALOG...: Szia! Tamásnak hivnak. (BlahBlahBlahBlahBlah)</p>
-    <p class="bioText" id="alexText">Szia! Alexnek hivnak. (BlahBlahBlahBlahBlah)</p>
-    <p class="bioText" id="daniText">Szia! Daninak hivnak. (BlahBlahBlahBlahBlah)</p>
-    <p id="hidden">Low Effort Gang (╯°□°）╯︵ ┻━┻ (légyszi Alex a css nagyon gyatra!)</p>
+    </main>
 </body>
 </html>

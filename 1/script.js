@@ -1,5 +1,5 @@
 function ShowOrNot(element) {
-  element = element.id.slice(0, -6) + 'Text'
+  element = element.id.replace("Button", "Text");
   element = document.getElementById(element);
   if (element.style.display === "block") {
     element.style.display = "none";
