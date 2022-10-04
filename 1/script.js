@@ -9,8 +9,9 @@ function ShowOrNot(element) {
 }
 
 var images = [
-    "https://www.w3schools.com/howto/img_nature_wide.jpg",
-    "https://www.w3schools.com/howto/img_snow_wide.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg/2560px-Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg",
+    "https://docplayer.hu/docs-images/91/107316652/images/1-1.jpg",
+    "https://minap.hu/sites/default/files/terv_kando1.jpg",
 ];
 
 window.addEventListener("load", (event) => {
@@ -26,7 +27,7 @@ window.addEventListener("load", (event) => {
             $("#no_img_text").hide();
             $("#image").attr("src", images[current_Image]);
             $('#image').show();
-            current_Image += 1
+            current_Image += 1;
         } else {
             current_Image = 0;
             $("#no_img_text").show();
