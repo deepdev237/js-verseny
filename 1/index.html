@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer src="script.js"></script>
     <title>Uncaught TypeError: Bemutatkozó</title>
 </head>
@@ -33,8 +34,10 @@
             </div>
             <div class="img-container">
                 <div class="images">
-                    <h2>Nyomd meg a gombot!</h2>
-                    <!--<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg/2560px-Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg" alt="Kandó régen">
+                    <img id="image" alt="">
+                    <h2 id="no_img_text">Nyomd meg a gombot!</h2>
+                    <!--
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg/2560px-Miskolc%2C_Pal%C3%B3czy_L%C3%A1szl%C3%B3_utca%2C_el%C5%91t%C3%A9rben_a_Kand%C3%B3_K%C3%A1lm%C3%A1n_Szakk%C3%B6z%C3%A9piskola._Fortepan_21143.jpg" alt="Kandó régen">
                     <img src="https://docplayer.hu/docs-images/91/107316652/images/1-1.jpg" alt="Kandó most">
                     <img src="https://minap.hu/sites/default/files/terv_kando1.jpg" alt="Kandó jövő">-->
                 </div>
@@ -60,7 +63,15 @@
                     </div>
                 </div>
                 <div class="bio">
-                    <p class="bioText" id="tamasText">BEGIN NPC DIALOG...: Szia! Tamásnak hivnak. (BlahBlahBlahBlahBlah)</p>
+                    <p class="bioText" id="tamasText">
+                        Hello!
+                        <br>
+                        Tamásnak hívnak.
+                        <br>
+                        Hobbijaim: Programozás, Fotózás.
+                        <br>
+                        Programozás közben mindig arra törekedek, hogy a kódom számomra és mások számára is olvasható és továbbfejleszthető legyen.
+                    </p>
                     <p class="bioText" id="alexText">Szia! Alexnek hivnak. (BlahBlahBlahBlahBlah)</p>
                     <p class="bioText" id="daniText">Szia! Daninak hivnak. (BlahBlahBlahBlahBlah)</p>
                 </div>

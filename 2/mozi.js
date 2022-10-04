@@ -22,12 +22,12 @@ movies.push({title: "The Dunes", categories: ["Thriller"], relase_date: "2021. o
 
 function GetLikedCategories(){
 	let x = $('input[name="like"]:checked').map(function(){return $(this).val();}).get();
-	return x
+	return x;
 }
 
 function GetDislikedCategories(){
 	let x = $('input[name="dislike"]:checked').map(function(){return $(this).val();}).get();
-	return x
+	return x;
 }
 
 //get categories from movies
@@ -35,7 +35,7 @@ var categories = []
 movies.forEach(movie => {
 	movie.categories.forEach(category => {
 		if (!categories.includes(category)) {
-			categories.push(category)
+			categories.push(category);
 		}
 	});
 });
@@ -48,24 +48,28 @@ categories.forEach(category => {
 });
 
 $('input[name="like"]').change(function() {
-	let dislikes = GetDislikedCategories()
-	let likes = GetLikedCategories()
+	let dislikes = GetDislikedCategories();
+	let likes = GetLikedCategories();
 	dislikes.forEach(disliked_category => {
+		console.log(disliked_category)
 		likes.forEach(like_category => {
 			let dislike_category = '#' + 'dislike_' + like_category
-			$(dislike_category).prop( "checked", false );
+			console.log(dislike_category)
+			$(dislike_category).prop( "checked", false);
 		});
 
 	});
 });
 
 $('input[name="dislike"]').change(function() {
-	let dislikes = GetDislikedCategories()
-	let likes = GetLikedCategories()
+	let dislikes = GetDislikedCategories();
+	let likes = GetLikedCategories();
 	dislikes.forEach(disliked_category => {
 		likes.forEach(liked_category => {
 			let dislike_category = '#' + 'dislike_' + liked_category
 			if (liked_category == disliked_category) {
+				console.log(disliked_category)
+				console.log(dislike_category)
 				$('#' + liked_category).prop( "checked", false);
 				$(dislike_category).prop( "checked", true);
 			} else {
@@ -88,8 +92,8 @@ $('#done').click(function(event) {
 
 	movies.forEach(movie => { // loop through movies
 		let show_movie = true;
-		let liked = false
-		let disliked = false
+		let liked = false;
+		let disliked = false;
 
 		likes.forEach(liked_category => {
 			for (let c = 0; c < movie.categories.length; c++) { // loop through the categories of the film
@@ -112,27 +116,27 @@ $('#done').click(function(event) {
 		});
 
 		if (liked && disliked) {
-			show_movie = false
+			show_movie = false;
 		} else if(disliked) {
-			show_movie = false
+			show_movie = false;
 		} else if (liked) {
-			show_movie = true
+			show_movie = true;
 		} else if (likes.length == 0 && dislikes.length == 0) {
-			show_movie = true
+			show_movie = true;
 		} else if (!liked && likes.length > 0) {
-			show_movie = false
+			show_movie = false;
 		} else if (!disliked && !liked) {
-			show_movie = true
+			show_movie = true;
 		}
 
 		if (show_movie) {
-			let cats = ''
+			let cats = '';
 			
 			movie.categories.forEach(function(category, idx, array){
 				if (idx === array.length - 1) { // if it's at the end
-					cats += category
+					cats += category;
 				} else {
-					cats += category + ', '
+					cats += category + ', ';
 				}
 			});
 

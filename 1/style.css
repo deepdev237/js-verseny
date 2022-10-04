@@ -1,7 +1,7 @@
 @font-face{
     font-family:'digital-clock-font';
     src: url('digital-7.ttf');
-   }
+}
 
 * {
     margin: 0;
