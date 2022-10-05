@@ -13,14 +13,14 @@
     <nav>
         <h2>Bemutatkozó</h2>
         <ul>
-            <li id="on_that_site"><a href="../1/index.html">Bemutatkozó</a></li>
-            <li><a href="../2/index.html">Film ajánló</a></li>
+            <a href="../1/index.html"><li id="on_that_site">Bemutatkozó</li></a>
+            <a href="../2/index.html"><li>Filmajánló</li></a>
         </ul>
     </nav>
 
     <main>
         <div class="content">
-            <h1>Üdvözlünk a "Bemutatkozó"-ban!</h1>
+            <h1 data-translate="udv">Üdvözlünk a "Bemutatkozó"-ban!</h1>
             <div class="introduction">
                 <b>Az oldalt az <span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span> csapata készítette.</b>
             </div>
@@ -43,7 +43,7 @@
                 <h2><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span></h2>
                 <div class="people">
                     <div class="person">
-                        <div class="img-frame"><img src="https://media.discordapp.net/attachments/795352960325910549/1025839793151692820/unknown.png" alt="Glonczi T."></div>
+                        <div class="img-frame"><img src="https://mail.google.com/mail/u/0?ui=2&ik=2241fcf5f0&attid=0.1&permmsgid=msg-a:r2139486887318626545&th=183a78e0cb47069f&view=fimg&fur=ip&sz=s0-l75-ft&attbid=ANGjdJ9AWaBzxbHnUo9JZ--XVsPSrDCeEjUOzWCouMwG7Eo0VwZVuenL-UCWibpr99itAtk_oS3pM8HQcq5MbOqnYnvn8xoiqxJoduacD5uz3-A_x2Y1YcZPwxKY1lE&disp=emb&realattid=ii_l8vg8wdc0" alt="Glonczi T."></div>
                         <h3>Glonczi Tamás</h3>
                         <button onclick="ShowOrNot(this)" type="button" id="tamasButton">Tamás bemutatkozó</button>
                     </div>
@@ -59,17 +59,24 @@
                     </div>
                 </div>
                 <div class="bio">
-                    <p class="bioText" id="tamasText">
-                        Hello!
-                        <br>
-                        Tamásnak hívnak.
-                        <br>
-                        Hobbijaim: Programozás, Fotózás.
-                        <br>
-                        Programozás közben mindig arra törekedek, hogy a kódom számomra és mások számára is olvasható és továbbfejleszthető legyen.
-                    </p>
-                    <p class="bioText" id="alexText">Szia! Alexnek hivnak. (BlahBlahBlahBlahBlah)</p>
-                    <p class="bioText" id="daniText">Szia! Daninak hivnak. (BlahBlahBlahBlahBlah)</p>
+                    <div class="bioText" id="tamasText">
+                        <p>Helló!</p>
+                        <p>Tamásnak hívnak.</p>
+                        <p>Hobbijaim: Programozás, Fotózás</p>
+                        <p class="lie">Programozás közben mindig arra törekedek, hogy a kódom számomra és mások számára is olvasható és továbbfejleszthető legyen.</p>
+                    </div>
+                    <div class="bioText" id="alexText">
+                        <p>Helló!</p>
+                        <p>Alexnek hívnak!</p>
+                        <p>Hobbijaim: Programozás, Olvasás, Utazás</p>
+                        <p class="lie">Próbálok kevesebb kóddal többet elérni.</p>
+                    </div>
+                    <div class="bioText" id="daniText">
+                        <p>Helló!</p>
+                        <p>Daninak hívnak!</p>
+                        <p>Hobbijaim: billentyűzetek építése/bütykölése(hobbielektronika), Jazz/egyéb zenei elfoglaltságok, programozás(PY C# HTML CSS)</p>
+                        <p class="lie">Komplex problémákra keresem a lehető legegyszerűbb megoldásokat.</p>
+                    </div>
                 </div>
             </div>
         </div>

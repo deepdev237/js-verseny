@@ -31,7 +31,7 @@ window.addEventListener("load", (event) => {
         } else {
             current_Image = 0;
             $("#no_img_text").show();
-            $("#no_img_text").html("Vége<br>Nyomd meg a gombot!");
+            $("#no_img_text").html("Vége!");
             $('#image').hide();
         }
     });
