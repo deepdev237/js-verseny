@@ -35,4 +35,6 @@ window.addEventListener("load", (event) => {
             $('#image').hide();
         }
     });
+
+    $('#image').hide();
 });
