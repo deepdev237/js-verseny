@@ -3,6 +3,11 @@
     src: url('digital-7.ttf');
 }
 
+@font-face{
+    font-family:'fancy-keziras';
+    src: url('PassionsConflict-Regular.ttf');
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -157,49 +162,6 @@ main .content .top-container a:hover {
     color: rgb(169, 169, 169);
 }
 
-/*group-container*/
-
-main .content .group-container h2 {
-    margin-bottom: 2em;
-    color: white;
-}
-
-main .content .group-container .people {
-    display: flex;
-    justify-content: space-around;
-}
-
-main .content .group-container .people .person {
-    width: 10vw;
-}
-
-main .content .group-container .people .person .img-frame {
-    margin: 0 auto 1em;
-    height: 10vw;
-}
-
-main .content .group-container .people .person .img-frame img {
-    border-radius: 100%;
-    background-color: rgba(46, 46, 46, 0.691);
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-}
-
-main .content .group-container .people .person h3 {
-    color: white;
-}
-
-main .content .group-container .bio {
-    color: white;
-    margin-top: 2em;
-}
-
-main .content .group-container .bio p {
-    display: none;
-    margin-top: 1em;
-}
-
 /*img-container*/
 
 main .content .img-container {
@@ -228,6 +190,56 @@ main .content .img-container .images img {
     object-fit: cover;
     height: 100%;
     width: 100%;
+}
+
+/*group-container*/
+
+main .content .group-container h2 {
+    margin-bottom: 2em;
+    color: white;
+}
+
+main .content .group-container .people {
+    display: flex;
+    justify-content: space-around;
+}
+
+main .content .group-container .people .person {
+    width: 10vw;
+}
+
+main .content .group-container .people .person .img-frame {
+    margin: 0 auto 1em;
+    height: 10vw;
+}
+
+main .content .group-container .people .person .img-frame img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    border-radius: 100%;
+    background-color: rgba(46, 46, 46, 0.691);
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+main .content .group-container .people .person h3 {
+    color: white;
+}
+
+main .content .group-container .bio {
+    color: white;
+    margin-top: 2em;
+}
+
+main .content .group-container .bio .bioText {
+    display: none;
+    margin-top: 1em;
+}
+
+main .content .group-container .bio .bioText {
+    font-family: 'fancy-keziras';
+    font-size: 30px;
 }
 
 @media screen and (max-width: 700px) {
