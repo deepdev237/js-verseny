@@ -5,15 +5,20 @@ scale = scale + 1
 for (let i = 1; i < scale; i++) {
     let tds = []
     for (let index = 1; index < scale; index++) {
-        tds.push('<td>' + i + '</td>')
+        tds.push('<td><p>' + index + '</p></td>')
     }
+    /*
     for (let x = 0; x < tds.length; x++) {
         for (let a = 1; a < i; a++) {
             tds[i] = '<td><p style="color: red;">' + a + '</p></td>'
         } 
     }
-    
+    */
     trs.push(tds)
+}
+
+for (let i = 0; i < scale; i++) {
+    
 }
 
 /////////////////
@@ -29,6 +34,6 @@ for (let i = 1; i < trs.length; i++) {
 */
 
 trs.forEach(element => {
-    $('table tbody').append('<tr>' + element + '</tr>');
+    //$('table tbody').append('<tr>' + element + '</tr>');
 });
 

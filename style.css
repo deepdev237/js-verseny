@@ -2,6 +2,6 @@ body {
     margin: 0;
 }
 
-.table {
-    border: 5px red block;
+table, th, td {
+    border: 1px solid black;
 }
