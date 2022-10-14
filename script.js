@@ -3,6 +3,7 @@ trs= []
 
 for (let i = 0; i < scale.length; i++) {
     const number = scale[i]
+    let lastNumber = 0
     if (scale[i - 1]) {
         lastNumber = scale[i - 1]
     } else {
