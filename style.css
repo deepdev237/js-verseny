@@ -5,3 +5,10 @@ body {
 table, th, td {
     border: 1px solid black;
 }
+
+table {
+    width: 60vw;
+    height: 80vh;
+    margin-left: auto;
+    margin-right: auto;
+}
