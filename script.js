@@ -1,9 +1,9 @@
-scale = 10
+var scale = 10
 let scale_ids = []
 
-for (let i = 0; i < (scale + 1); i++) {
+for (let i = 0; i < scale; i++) {
     let ids = []
-    for (let x = 0; x < (scale + 1); x++) {
+    for (let x = 0; x < scale; x++) {
         let id = i + '-' + x
         ids.push(id)
     }
