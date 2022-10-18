@@ -1,7 +1,10 @@
 var scale = 8
-let scale_ids = []
-let corner_ids = []
-var playingAs = "white"
+var scale_ids = []
+var corner_ids = []
+var startingColor = "black"
+var playingAs = startingColor
+var isGameRunning = false
+var GameTime = '00:00'
 
 for (let i = 0; i < scale; i++) {
     let ids = []
@@ -86,59 +89,71 @@ function SetDiskOnID(id, color) {
     if (color === "white") {
         $(disk).removeClass("black");
         $(disk).toggleClass(color);
+        if ($(disk).hasClass("clickable")) {
+            $(disk).removeClass("clickable");
+        }
     } else if (color === "black") {
         $(disk).removeClass("white");
         $(disk).toggleClass(color);
+        if ($(disk).hasClass("clickable")) {
+            $(disk).removeClass("clickable");
+        }
     }
 }
 
 function ResetDiskOnID(id) {
     let disk = GetDiskOnID(id)
     $(disk).removeClass("black");
-    $(disk).removeClass("remove");
+    $(disk).removeClass("white");
+    $(disk).removeClass("clickable");
 }
 
-function ResetBoard() {
+function EraseBoard() {
     scale_ids.forEach(ids => {
         ids.forEach(id => {
             ResetDiskOnID(id)
         });
     });
+}
+
+function ResetBoard() {
+    EraseBoard()
     let halfID = (scale / 2)
     let startingIDs = []
-    startingIDs.push({"id" : (halfID - 1) + '-' + halfID, "color" : "white"})
-    startingIDs.push({"id" : halfID + '-' + (halfID - 1), "color" : "white"})
-    startingIDs.push({"id" : (halfID - 1) + '-' + (halfID - 1), "color" : "black"})
-    startingIDs.push({"id" : halfID + '-' + halfID, "color" : "black"})
+    startingIDs.push({"id" : (halfID - 1) + '-' + halfID, "color" : "black"})
+    startingIDs.push({"id" : halfID + '-' + (halfID - 1), "color" : "black"})
+    startingIDs.push({"id" : (halfID - 1) + '-' + (halfID - 1), "color" : "white"})
+    startingIDs.push({"id" : halfID + '-' + halfID, "color" : "white"})
     startingIDs.forEach(element => {
         SetDiskOnID(element.id, element.color)
     });
 }
 
-const directions = ["left", "right", "up", "down", "leftup", "leftdown", "rightup", "rightdown"]
+const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
 
-function GetDiskToThe(direction, id) {
+function GetIDInDirection(direction, id) {
     let column = parseInt(id.split("-")[0])
     let row = parseInt(id.split("-")[1])
-    if (direction === "left") {
+    
+    if (direction === "leftup") {
+        column = column - 1
         row = row - 1
-    } else if (direction === "right") {
-        row = row + 1
-    } else if (direction === "up") {
-        column = column - 1
-    } else if (direction === "down") {
-        column = column + 1
-    } else if (direction === "leftup") {
-        column = column - 1
+    } else if (direction === "left") {
         row = row - 1
     } else if (direction === "leftdown") {
         column = column + 1
         row = row - 1
+    } else if (direction === "up") {
+        column = column - 1
+    } else if (direction === "down") {
+        column = column + 1
     } else if (direction === "rightup") {
         column = column - 1
         row = row + 1
+    } else if (direction === "right") {
+        row = row + 1
     } else if (direction === "rightdown") {
-        column = column - 1
+        column = column + 1
         row = row + 1
     }
     
@@ -159,45 +174,159 @@ function oppositeColor(color) {
     }
 }
 
-function TryToTrap(direction, startingID) {
+function isSafeSquare(disk) {
+    if (($(disk).hasClass("white")) || ($(disk).hasClass("black"))) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function getColorOnID(id) {
+    let disk = GetDiskOnID(id)
+    if ($(disk).hasClass("white")) {
+        return "white";
+    } else if ($(disk).hasClass("black")) {
+        return "black";
+    } else {
+        return null;
+    }
+}
+
+function checkForGameOver() {
+    var clickables = $(".clickable").map(function() {
+        return this.innerHTML;
+    }).get();
+    if (clickables.length == 0) {
+        //Game Over
+    }
+}
+
+function RefreshClickableSquares() {
+    for (let column = 0; column < scale; column++) {
+        for (let row = 0; row < scale; row++) {
+            let id = column + '-' + row
+            let disk = GetDiskOnID(id)
+            if (isSafeSquare(disk)) {
+                let hasDisksAround = false
+                let can_trap = false
+                directions.forEach(direction => {
+                    let checkingID = GetIDInDirection(direction, id)
+                    if (checkingID != null) {
+                        let trapped_ids = canTrap(direction, id)
+                        if (trapped_ids != null && trapped_ids.length > 0) {
+                            if (getColorOnID(checkingID) != playingAs) { // if first trapped id isn't the same as the playing color
+                                can_trap = true
+                                let checkingDisk = GetDiskOnID(checkingID)
+                                if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))) {
+                                    hasDisksAround = true
+                                }
+                            }
+                        }
+                    }
+                });
+
+                if (can_trap && hasDisksAround && $(disk).hasClass("clickable") === false) {
+                    $(disk).addClass("clickable")
+                } else {
+                    $(disk).removeClass("clickable");
+                }
+            }
+            //console.log('')
+        }
+    }
+}
+
+function canTrap(direction, startingID) {
     let gotSameColor = false;
     let opposite_color = oppositeColor(playingAs)
     let trapped_ids = []
-    let checkingID = GetDiskToThe(direction, startingID)
-    console.log(checkingID)
+    let checkingID = GetIDInDirection(direction, startingID)
     let checkingDisk = GetDiskOnID(checkingID)
+
     while (!gotSameColor || checkingDisk === null) {
         if ($(checkingDisk).hasClass(playingAs)) {
             gotSameColor = true;
         } else if ($(checkingDisk).hasClass(opposite_color)) {
             trapped_ids.push(checkingID)
         }
-        console.log(direction)
-        checkingID = GetDiskToThe(direction, checkingID)
         if (checkingID != null) {
-            checkingDisk = GetDiskOnID(checkingID)
+            checkingID = GetIDInDirection(direction, checkingID)
+            if (checkingID != null) {
+                checkingDisk = GetDiskOnID(checkingID)
+            } else {
+                break;
+            }
         } else {
             break;
         }
     }
     if (gotSameColor) {
         if (trapped_ids.length > 0) {
-            SetDiskOnID(startingID, playingAs)
-            trapped_ids.forEach(id => {
-                SetDiskOnID(id, playingAs)
-            });
+            return trapped_ids;
         } else {
-            //couldn't trap
+            return null;
         }
+    } else {
+        return null;
     }
 }
 
 $("td").on("click", function () {
-    let id = this.id
-    directions.forEach(direction => {
-        TryToTrap(direction, id)
-    });
-    playingAs = oppositeColor(playingAs)
+    if ($(this).children('div').hasClass("clickable")) {
+        let id = this.id
+        SetDiskOnID(id, playingAs)
+        directions.forEach(direction => {
+            let trapped_ids = canTrap(direction, id)
+            if (trapped_ids != null) {
+                trapped_ids.forEach(id => {
+                    SetDiskOnID(id, playingAs)
+                });
+            }
+        });
+        playingAs = oppositeColor(playingAs)
+        $("#currentColor").text('Most lép:' + playingAs)
+        RefreshClickableSquares()
+        checkForGameOver()
+    }
 });
 
-ResetBoard()
+$("#start").on("click", function () {
+    StartOrStopGame()
+});
+
+function GameTimer() {
+    if (isGameRunning) {
+        let minute = parseInt(GameTime.split(':')[0])
+        let second = parseInt(GameTime.split(':')[1])
+        if (second == 60) {
+            minute = minute + 1
+            second = 0
+        } else {
+            second = second + 1
+        }
+        GameTime = minute + ':' + second
+        $("#GameTime").text('Játékidő:' + GameTime)
+    }
+}
+
+setInterval(GameTimer, 1000);
+
+function StartOrStopGame() {
+    if (isGameRunning) {
+        EraseBoard()
+        isGameRunning = false
+        GameTime = '00:00'
+        playingAs = startingColor
+        $("#start").text('Start Game')
+        $("#GameTime").text('Játékidő:' + GameTime)
+        $("#currentColor").text('Most lép:' + playingAs)
+    } else {
+        ResetBoard()
+        RefreshClickableSquares()
+        isGameRunning = true
+        $("#start").text('Stop Game')
+        $("#GameTime").text('Játékidő:' + GameTime)
+        $("#currentColor").text('Most lép:' + playingAs)
+    }
+}

@@ -70,3 +70,8 @@ table {
 .black {
     background: black;
 }
+
+.clickable {
+    border-radius: 100%;
+    background: rgb(40, 182, 123);
+}
