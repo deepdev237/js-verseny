@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(79,79,79,1) 100%, rgba(0,212,255,1) 100%);
+    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(79,79,79,1) 100%, rgba(0,212,255,1) 100%); /*for_browser_support*/
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(79,79,79,1) 100%, rgba(0,212,255,1) 100%); /*for_browser_support*/
+}
+
+/*main*/
+
+main {
+    justify-content: center;
+    text-align: center;
+}
+
+main .content {
+    margin: 0 auto;
+}
+
+/*logo*/
+
+span#logo span#yellow {
+    color: rgb(230, 234, 0);
+}
+
+span#logo span#blue {
+    color: rgb(0, 106, 255);
+}
+
+span#logo span.Courier_New {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+span#logo span#red {
+    color: rgba(215, 0, 0, 0.837);
+}
+
+/*table*/
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table {
+    width: 70vw;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: green;
+}
+
+/*disk*/
+
+.disk {
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 5vw;
+    height: 8.5vh;
+}
+
+.white {
+    background: white;
+}
+
+.black {
+    background: black;
+}
