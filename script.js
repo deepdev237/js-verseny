@@ -178,8 +178,7 @@ function checkForGameOver() {
         return this.innerHTML;
     }).get();
     if (clickables.length == 0) {
-        window.alert("Game Over");
-        $("#start").click();
+        $('.valami').show();
     }
 }
 
