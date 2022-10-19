@@ -115,54 +115,6 @@ function calculateWinner() {
     $('.game_over').show();
 }
 
-/* Pontozás - félig működik
-for (let x = 0; x < (scale / 2); x++) {
-    let point = x + 1
-    let leftcorner = corner_ids[x].leftcorner
-    let rightcorner = corner_ids[x].rightcorner
-    
-    for (let i = 0; i < (leftcorner); i++) {
-        //console.log(i)
-        let disk = GetDiskOnID(leftcorner + '-' + i)
-        $(disk).html('<p>' + (i + 1) + '</p>')
-    }
-    
-    for (let i = leftcorner; i < (rightcorner + 1); i++) {
-        //console.log(i)
-        let disk = GetDiskOnID(leftcorner + '-' + i)
-        $(disk).html('<p>' + point + '</p>')
-    }
-    
-    for (let i = scale; i >= (rightcorner + 1); i--) {
-        let disk = GetDiskOnID(leftcorner + '-' + i)
-        $(disk).html('<p>' + x + '</p>')
-    }
-} //
-for (let x = (scale / 2); x >= 0; x--) {
-    let point = x + 1
-    let leftcorner = corner_ids[x].leftcorner
-    let rightcorner = corner_ids[x].rightcorner
-    
-    for (let i = 0; i < (leftcorner); i++) {
-        //console.log(i)
-        let disk = GetDiskOnID(leftcorner + '-' + i)
-        $(disk).html('<p>' + (i + 1) + '</p>')
-    }
-    
-    for (let i = leftcorner; i < (rightcorner + 1); i++) {
-        //console.log(i)
-        let disk = GetDiskOnID(leftcorner + '-' + i)
-        $(disk).html('<p>' + point + '</p>')
-    }
-    
-    for (let i = scale; i >= (rightcorner + 1); i--) {
-        console.log(i)
-        let disk = GetDiskOnID(leftcorner + '-' + i)
-        $(disk).html('<p>' + x + '</p>')
-    }
-}
-*/
-
 function GetDiskOnID(id) {
     return $('td#' + id + ' div.disk');
 }
@@ -397,7 +349,6 @@ function StartOrStopGame() {
         $("#GameTime").text('Játékidő:' + Time)
 
         let lep = $('#' +  playingAs + '_username').html()
-        console.log('lep:' + lep)
         $("#currentColor").text('Most lép: ' + lep)
     } else {
         DrawBoard()
@@ -408,7 +359,6 @@ function StartOrStopGame() {
         $("#start").text('Stop Game')
         $("#GameTime").text('Játékidő:' + Time)
         let lep = $('#' +  playingAs + '_username').html()
-        console.log('lep:' + lep)
         $("#currentColor").text('Most lép: ' + lep)
     }
 }
