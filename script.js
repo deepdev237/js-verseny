@@ -1,34 +1,102 @@
 const startingColor = "black"
 const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
-var playingAs = startingColor
-var scale = 8
-var scale_ids = []
-var corner_ids = []
-var isGameRunning = false
-var GameTime = '00:00'
+const colors = {
+    ["white"] : "Fehér",
+    ["black"] : "Fekete"
+}
+whitePlayerName = "Player0"
+blackPlayerName = "Player1"
+playingAs = startingColor
+scale = 8
+scale_ids = []
+corner_ids = []
+isGameRunning = false
+Time = '00:00'
 
-for (let i = 0; i < scale; i++) {
-    let ids = []
-    for (let x = 0; x < scale; x++) {
-        let id = i + '-' + x
-        ids.push(id)
+function DrawBoard() {
+    console.log('DrawBoard')
+    $('table tbody').empty();
+    scale_ids = []
+    corner_ids = []
+    for (let i = 0; i < scale; i++) {
+        let ids = []
+        for (let x = 0; x < scale; x++) {
+            let id = i + '-' + x
+            ids.push(id)
+        }
+        let leftcorner = parseInt(ids[i].split('-')[0])
+        let rightcorner = parseInt(ids[(ids.length - 1 - i)].split('-')[1])
+        if (i == (scale / 2)) {
+            rightcorner = parseInt(ids[(ids.length - i)].split('-')[1])
+        }
+        corner_ids.push({leftcorner, rightcorner})
+        scale_ids.push(ids)
     }
-    let leftcorner = parseInt(ids[i].split('-')[0])
-    let rightcorner = parseInt(ids[(ids.length - 1 - i)].split('-')[1])
-    if (i == (scale / 2)) {
-        rightcorner = parseInt(ids[(ids.length - i)].split('-')[1])
-    }
-    corner_ids.push({leftcorner, rightcorner})
-    scale_ids.push(ids)
+
+    scale_ids.forEach(ids => {
+        let tr = []
+        ids.forEach(id => {
+            tr.push('<td id="' + id + '"><div class="disk"></div></td>')
+        });
+        $('table tbody').append('<tr>' + tr + '</tr>');
+    });
+
+    $(".content table tbody tr td").on("click", function () {
+        if ($(this).children('div').hasClass("clickable")) {
+            let id = this.id
+
+            SetDiskOnID(id, playingAs)
+            directions.forEach(direction => {
+                let trapped_ids = canTrap(direction, id)
+
+                if (trapped_ids != null) {
+                    trapped_ids.forEach(id => {
+                        SetDiskOnID(id, playingAs)
+                    });
+                }
+            });
+
+            playingAs = oppositeColor(playingAs)
+            $("#currentColor").text('Most lép:' + playingAs)
+
+            RefreshClickableSquares()
+            //checking for game over
+            var clickables = $(".clickable").map(function() {return this.innerHTML;}).get();
+            if (clickables.length == 0) {
+                calculateWinner()
+            }
+        }
+    });
 }
 
-scale_ids.forEach(ids => {
-    let tr = []
-    ids.forEach(id => {
-        tr.push('<td id="' + id + '"><div class="disk"></div></td>')
+function calculateWinner() {
+    let whitePoints = 0
+    let blackPoints = 0
+    let winner = "err"
+    scale_ids.forEach(ids => {
+        ids.forEach(id => {
+            let disk = GetDiskOnID(id)
+            
+            if ($(disk).hasClass("white")) {
+                whitePoints += 1
+            } else if ($(disk).hasClass("black")) {
+                blackPoints += 1
+            }
+        });
     });
-    $('table tbody').append('<tr>' + tr + '</tr>');
-});
+    if (whitePoints > blackPoints) {
+        winner = "white"
+    } else {
+        winner = "black"
+    }
+    $('#winner').html(colors[winner])
+    $('#game_time').html(Time)
+    $('#black_player').html(blackPlayerName + '(' + colors["black"] + ')')
+    $('#black_point').html(blackPoints)
+    $('#white_point').html(whitePoints)
+    $('#white_player').html(whitePlayerName + '(' + colors["white"] + ')')
+    $('.game_over').show();
+}
 
 /* Pontozás - félig működik
 for (let x = 0; x < (scale / 2); x++) {
@@ -106,27 +174,6 @@ function ResetDiskOnID(id) {
     $(disk).removeClass("clickable");
 }
 
-function EraseBoard() {
-    scale_ids.forEach(ids => {
-        ids.forEach(id => {
-            ResetDiskOnID(id)
-        });
-    });
-}
-
-function ResetBoard() {
-    EraseBoard()
-    let halfID = (scale / 2)
-    let startingIDs = []
-    startingIDs.push({"id" : (halfID - 1) + '-' + halfID, "color" : "black"})
-    startingIDs.push({"id" : halfID + '-' + (halfID - 1), "color" : "black"})
-    startingIDs.push({"id" : (halfID - 1) + '-' + (halfID - 1), "color" : "white"})
-    startingIDs.push({"id" : halfID + '-' + halfID, "color" : "white"})
-    startingIDs.forEach(element => {
-        SetDiskOnID(element.id, element.color)
-    });
-}
-
 function GetIDInDirection(direction, id) {
     let column = parseInt(id.split("-")[0])
     let row = parseInt(id.split("-")[1])
@@ -167,38 +214,6 @@ function oppositeColor(color) {
         return "white";
     } else {
         return null;
-    }
-}
-
-function checkForGameOver() {
-    var clickables = $(".clickable").map(function() {
-        return this.innerHTML;
-    }).get();
-    if (clickables.length == 0) {
-        calculateWinner()
-        $('.game_over').show();
-    }
-}
-
-function calculateWinner() {
-    let whitePoints = 0
-    let blackPoints = 0
-    scale_ids.forEach(ids => {
-        ids.forEach(id => {
-            let disk = GetDiskOnID(id)
-            
-            if ($(disk).hasClass("white")) {
-                whitePoints += 1
-            } else if ($(disk).hasClass("black")) {
-                blackPoints += 1
-            }
-        });
-    });
-    if (whitePoints > blackPoints) {
-        //winner is white
-
-    } else {
-        //winner is black
     }
 }
 
@@ -249,22 +264,14 @@ function canTrap(direction, startingID) {
         let isEmpty = $(checkingDisk).hasClass(playingAs) == false && $(checkingDisk).hasClass(opposite_color) == false && $(checkingDisk).hasClass("clickable") == false
         if (isEmpty) {
             emptyInTheWay = true
+            break
         }
         if ($(checkingDisk).hasClass(playingAs)) {
             gotSameColor = true;
         } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
             trapped_ids.push(checkingID)
         }
-        
-        console.log(isEmpty, checkingID)
-        /*
-        if ($(checkingDisk).hasClass(playingAs) || !hasColor) {
-            gotSameColor = true;
-        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
-            trapped_ids.push(checkingID)
-        }
-        */
-        
+
         if (checkingID != null) {
             checkingID = GetIDInDirection(direction, checkingID)
             if (checkingID != null) {
@@ -287,61 +294,75 @@ function canTrap(direction, startingID) {
     }
 }
 
-$("td").on("click", function () {
-    if ($(this).children('div').hasClass("clickable")) {
-        let id = this.id
-        SetDiskOnID(id, playingAs)
-        directions.forEach(direction => {
-            let trapped_ids = canTrap(direction, id)
-            if (trapped_ids != null) {
-                trapped_ids.forEach(id => {
-                    SetDiskOnID(id, playingAs)
-                });
-            }
-        });
-        playingAs = oppositeColor(playingAs)
-        $("#currentColor").text('Most lép:' + playingAs)
-        RefreshClickableSquares()
-        checkForGameOver()
-    }
-});
-
-$("#start").on("click", function () {
-    StartOrStopGame()
-});
-
 function GameTimer() {
     if (isGameRunning) {
-        let minute = parseInt(GameTime.split(':')[0])
-        let second = parseInt(GameTime.split(':')[1])
+        let minute = parseInt(Time.split(':')[0])
+        let second = parseInt(Time.split(':')[1])
         if (second == 60) {
             minute += 1
             second = 0
         } else {
             second += 1
         }
-        GameTime = minute + ':' + second
-        $("#GameTime").text('Játékidő:' + GameTime)
+        Time = minute + ':' + second
+        $("#GameTime").text('Játékidő:' + Time)
     }
 }
-
 setInterval(GameTimer, 1000);
+
+function EraseBoard() {
+    scale_ids.forEach(ids => {
+        ids.forEach(id => {
+            ResetDiskOnID(id)
+        });
+    });
+}
+
+function ResetBoard() {
+    EraseBoard()
+    let halfID = (scale / 2)
+    let startingIDs = []
+    startingIDs.push({"id" : (halfID - 1) + '-' + halfID, "color" : "black"})
+    startingIDs.push({"id" : halfID + '-' + (halfID - 1), "color" : "black"})
+    startingIDs.push({"id" : (halfID - 1) + '-' + (halfID - 1), "color" : "white"})
+    startingIDs.push({"id" : halfID + '-' + halfID, "color" : "white"})
+    startingIDs.forEach(element => {
+        SetDiskOnID(element.id, element.color)
+    });
+}
 
 function StartOrStopGame() {
     if (isGameRunning) {
         EraseBoard()
         isGameRunning = false
-        GameTime = '00:00'
+        Time = '00:00'
         playingAs = startingColor
         $("#start").text('Start Game')
-        $("#GameTime").text('Játékidő:' + GameTime)
-        $("#currentColor").text('Most lép:' + playingAs)
+        $("#GameTime").text('Játékidő:' + Time)
+        $("#currentColor").text('Most lép:' + colors[playingAs])
     } else {
+        DrawBoard()
         ResetBoard()
         RefreshClickableSquares()
         isGameRunning = true
         $("#start").text('Stop Game')
-        $("#GameTime").text('Játékidő:' + GameTime)
-        $("#currentColor").text('Most lép:' + playingAs)
+        $("#GameTime").text('Játékidő:' + Time)
+        $("#currentColor").text('Most lép:' + colors[playingAs])
     }
+    console.log(scale_ids)
 }
+
+function setScale(element) {
+    let num = $(element).text().split('x')[0]
+    scale = parseInt(num);
+}
+
+$("#newgame").on("click", function () {
+    $(".game_over").hide();
+    StartOrStopGame()
+    StartOrStopGame()
+})
+
+$("#start").on("click", function () {
+    StartOrStopGame()
+});

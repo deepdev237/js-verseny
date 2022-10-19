@@ -10,6 +10,9 @@
     <title>Uncaught TypeError</title>
 </head>
 <body>
+    <header>
+        <h1><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span></h1>
+    </header>
     <main>
         <div class="game_over">
             <div class="over-content">
@@ -17,20 +20,23 @@
                 <div style="line-height: 2.5vh;">
                     <p>Nyertes: <span id="winner">Black</span></p>
                     <p>Játék idő: <span id="game_time">1:50</span></p>
-                    <p><span id="black_gamer">Teszt János</span> játékos: <span id="black_point">25</span> pont</p>
-                    <p><span id="white_gamer_gamer">Próba István</span> játékos: <span id="white_point">10</span> pont</p>
+                    <p><span id="black_player">Teszt János</span> játékos: <span id="black_point">25</span> pont</p>
+                    <p><span id="white_player">Próba István</span> játékos: <span id="white_point">10</span> pont</p>
                     <div class="buttons">
                         <button style="margin-right: 5vh;" onclick='$(".game_over").hide();'>Bezárás</button>
-                        <button>Újra</button>
+                        <button id="newgame">Újra</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="left">
-            <h1><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span></h1>
             <div class="game-info-controls">
                 <p id="currentColor">Most lép: </p>
                 <p id="GameTime">Játékidő: </p>
+                <button onclick="setScale(this)">4x4</button>
+                <button onclick="setScale(this)">6x6</button>
+                <button onclick="setScale(this)">8x8</button>
+                <button onclick="setScale(this)">10x10</button>
                 <button id="start">Start Game</button>
             </div>
         </div>

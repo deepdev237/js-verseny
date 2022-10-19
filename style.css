@@ -37,6 +37,7 @@ body {
 /*main*/
 
 main {
+    display: flex;
     justify-content: center;
     text-align: center;
 }
@@ -49,18 +50,23 @@ main .content {
 
 main .left {
     width: 20%;
-    text-align: center;
-    display: inline-block;
+    margin: 5vh auto;
 }
 
 /*right*/
 
 main .right {
     width: 20%;
-    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*logo*/
+
+header h1 {
+    text-align: center;
+    margin: 5vh 0;
+}
 
 span#logo span#yellow {
     color: rgb(230, 234, 0);
@@ -81,7 +87,6 @@ span#logo span#red {
 /*table*/
 
 .content {
-    display: inline-block;
     margin-left: auto;
     margin-right: auto;
 }
@@ -92,11 +97,12 @@ main .content table {
 }
 
 td {
+    height: 5px;
     border: 1px solid rgba(0, 0, 0, 0.466);
 }
 
 table {
-    width: 850px;
+    width: 50vw;
     background-color: rgba(255, 255, 255, 0.185);
 }
 
