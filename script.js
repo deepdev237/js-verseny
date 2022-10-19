@@ -175,6 +175,7 @@ function checkForGameOver() {
         return this.innerHTML;
     }).get();
     if (clickables.length == 0) {
+        calculateWinner()
         $('.valami').show();
     }
 }
@@ -195,6 +196,7 @@ function calculateWinner() {
     });
     if (whitePoints > blackPoints) {
         //winner is white
+
     } else {
         //winner is black
     }
@@ -235,18 +237,24 @@ function RefreshClickableSquares() {
 }
 
 function canTrap(direction, startingID) {
-    let gotSameColorOrClickable = false;
+    let gotSameColor = false;
     let opposite_color = oppositeColor(playingAs)
     let trapped_ids = []
     let checkingID = GetIDInDirection(direction, startingID)
     let checkingDisk = GetDiskOnID(checkingID)
 
-    while (!gotSameColorOrClickable || checkingDisk === null) {
-        if ($(checkingDisk).hasClass(playingAs)) {
-            gotSameColorOrClickable = true;
-        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
-            trapped_ids.push(checkingID)
+    while (!gotSameColor || checkingDisk === null) {
+        let EmptySquare = $(checkingDisk).hasClass(playingAs) && $(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable")
+        if (EmptySquare) {
+            gotSameColor = true;
+        } else {
+            if ($(checkingDisk).hasClass(playingAs)) {
+                gotSameColor = true;
+            } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
+                trapped_ids.push(checkingID)
+            }
         }
+        
         if (checkingID != null) {
             checkingID = GetIDInDirection(direction, checkingID)
             if (checkingID != null) {
@@ -258,7 +266,7 @@ function canTrap(direction, startingID) {
             break;
         }
     }
-    if (gotSameColorOrClickable) {
+    if (gotSameColor) {
         if (trapped_ids.length > 0) {
             return trapped_ids;
         } else {
