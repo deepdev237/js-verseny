@@ -37,6 +37,7 @@ body {
 /*main*/
 
 main {
+    display: flex;
     justify-content: center;
     text-align: center;
 }
@@ -45,7 +46,27 @@ main .content {
     margin: 0 auto;
 }
 
+/*left*/
+
+main .left {
+    width: 20%;
+    margin: 5vh auto;
+}
+
+/*right*/
+
+main .right {
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /*logo*/
+
+header h1 {
+    text-align: center;
+    margin: 5vh 0;
+}
 
 span#logo span#yellow {
     color: rgb(230, 234, 0);
@@ -65,14 +86,23 @@ span#logo span#red {
 
 /*table*/
 
-table, th, td {
-    border: 1px solid black;
+.content {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+main .content table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+    height: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.466);
 }
 
 table {
-    width: 850px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 50vw;
     background-color: rgba(255, 255, 255, 0.185);
 }
 
@@ -96,13 +126,64 @@ table {
 
 .clickable {
     border-radius: 0;
-    background: rgba(161, 161, 161, 0.596);
+    background: rgba(104, 104, 104, 0.596);
 }
 
-@media screen and (max-width: 992px) {
-    
-}
+/*game_over*/
 
-.valami {
+main .game_over {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.699);
+}
+
+main .game_over .over-content {
+    border-radius: 5px;
+    width: 25%;
+    padding: 2%;
+    color: white;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.185);
+}
+
+main .game_over .over-content img {
+    width: 50%;
+    margin-bottom: 2vh;
+}
+
+main .game_over .over-content .buttons {
+    margin-top: 1.5vh;
+    justify-content: space-between;
+}
+
+/*buttons*/
+
+main button {
+    cursor: pointer;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.55);
+    border-radius: 5px;
+    width: 25%;
+    padding: 2%;
+}
+
+@media screen and (max-width: 880px) {
+    table {
+        width: 85vw;
+    }
+    table tr {
+        height: 1vw;
+    }
+
+    main .game_over .over-content {
+        padding: 5%;
+        width: 70%;
+    }
 }
