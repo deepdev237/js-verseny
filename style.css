@@ -171,14 +171,21 @@ table {
     margin-left: auto;
     margin-right: auto;
     height: 8vh;
+    transition: transform 0.2s 0s ease-in;
 }
 
 .white {
     background: white;
+    box-shadow: 2px 4px 4px #222;
 }
 
 .black {
     background: black;
+    box-shadow: 2px 4px 4px rgb(75, 75, 75);
+}
+
+.turn-effect {
+    transform: rotateY( 90deg );
 }
 
 .clickable {
@@ -186,7 +193,6 @@ table {
     border-radius: 0;
     background: rgba(104, 104, 104, 0.596);
 }
-
 
 /*game_over*/
 

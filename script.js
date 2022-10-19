@@ -12,9 +12,17 @@ scale_ids = []
 corner_ids = []
 isGameRunning = false
 Time = '00:00'
+TimerInterval = null
+
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}  
 
 function DrawBoard() {
-    console.log('DrawBoard')
     $('table tbody').empty();
     scale_ids = []
     corner_ids = []
@@ -45,22 +53,30 @@ function DrawBoard() {
         if ($(this).children('div').hasClass("clickable")) {
             let id = this.id
 
+            EraseClickables()
+
             SetDiskOnID(id, playingAs)
             directions.forEach(direction => {
                 let trapped_ids = canTrap(direction, id)
 
                 if (trapped_ids != null) {
+                    EraseClickables()
                     trapped_ids.forEach(id => {
-                        SetDiskOnID(id, playingAs)
+                        let set = SetDiskOnID(id, playingAs, true)
+                        while (!set || set == null) {
+                            sleep(1000)
+                        }
                     });
                 }
             });
 
             playingAs = oppositeColor(playingAs)
-            $("#currentColor").text('Most lép: ' + playingAs)
+            let lep = $('#' + playingAs + '_player').text()
+            $("#currentColor").text('Most lép: ' + lep)
 
             RefreshClickableSquares()
-                //checking for game over
+            
+            //checking for game over
             var clickables = $(".clickable").map(function() { return this.innerHTML; }).get();
             if (clickables.length == 0) {
                 calculateWinner()
@@ -95,6 +111,7 @@ function calculateWinner() {
     $('#black_point').html(blackPoints)
     $('#white_point').html(whitePoints)
     $('#white_player').html(whitePlayerName + '(' + colors["white"] + ')')
+    clearInterval(TimerInterval)
     $('.game_over').show();
 }
 
@@ -150,21 +167,44 @@ function GetDiskOnID(id) {
     return $('td#' + id + ' div.disk');
 }
 
-function SetDiskOnID(id, color) {
+function DoAnimOnID(id) {
+    let disk = GetDiskOnID(id)
+    $(disk).toggleClass("turn-effect");
+    setTimeout(function() {
+        $(disk).removeClass("turn-effect");
+    }, 300);
+}
+
+function SetDiskOnID(id, color, doAnim) {
     let disk = GetDiskOnID(id)
     if (color === "white") {
         $(disk).removeClass("black");
-        $(disk).toggleClass(color);
         if ($(disk).hasClass("clickable")) {
             $(disk).removeClass("clickable");
         }
+        if (doAnim) {
+            let disk = GetDiskOnID(id)
+            $(disk).toggleClass("turn-effect");
+            setTimeout(function() {
+                $(disk).removeClass("turn-effect");
+            }, 300);
+        }
+        $(disk).toggleClass(color);
     } else if (color === "black") {
         $(disk).removeClass("white");
-        $(disk).toggleClass(color);
         if ($(disk).hasClass("clickable")) {
             $(disk).removeClass("clickable");
         }
+        if (doAnim) {
+            let disk = GetDiskOnID(id)
+            $(disk).toggleClass("turn-effect");
+            setTimeout(function() {
+                $(disk).removeClass("turn-effect");
+            }, 300);
+        }
+        $(disk).toggleClass(color);
     }
+    return 'done';
 }
 
 function ResetDiskOnID(id) {
@@ -217,14 +257,22 @@ function oppositeColor(color) {
     }
 }
 
+function EraseClickables() {
+    scale_ids.forEach(ids => {
+        ids.forEach(id => {
+            let disk = GetDiskOnID(id)
+            $(disk).removeClass("clickable");
+        })
+    })
+}
+
 function RefreshClickableSquares() {
     scale_ids.forEach(ids => {
         ids.forEach(id => {
             let disk = GetDiskOnID(id)
-
+            let shouldBeClickable = false
+            
             if ((($(disk).hasClass("white")) || ($(disk).hasClass("black"))) === false) { //ha nincs korong a cellán
-                let shouldBeClickable = false
-
                 directions.forEach(direction => {
                     let checkingID = GetIDInDirection(direction, id)
 
@@ -234,7 +282,6 @@ function RefreshClickableSquares() {
                         if (trapped_ids != null && trapped_ids.length > 0) { //ha tud közbezárni
                             let checkingDisk = GetDiskOnID(checkingID)
                             let hasColor = $(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))
-
                             if (hasColor) {
                                 shouldBeClickable = true
                             }
@@ -295,20 +342,28 @@ function canTrap(direction, startingID) {
 }
 
 function GameTimer() {
-    if (isGameRunning) {
-        let minute = parseInt(Time.split(':')[0])
-        let second = parseInt(Time.split(':')[1])
-        if (second == 60) {
-            minute += 1
-            second = 0
-        } else {
-            second += 1
-        }
-        Time = minute + ':' + second
-        $("#GameTime").text('Játékidő:' + Time)
+    let minute = parseInt(Time.split(':')[0])
+    let second = parseInt(Time.split(':')[1])
+
+    if (second == 60) {
+        minute += 1
+        second = 0
+    } else {
+        second += 1
     }
+
+    minute = String(minute)
+    second = String(second)
+    if (minute.length < 2) {
+        minute = '0' + minute
+    }
+    if (second.length < 2) {
+        second = '0' + second
+    }
+
+    Time = minute + ':' + second
+    $("#GameTime").text('Játékidő: ' + Time)
 }
-setInterval(GameTimer, 1000);
 
 function EraseBoard() {
     scale_ids.forEach(ids => {
@@ -335,21 +390,24 @@ function StartOrStopGame() {
     if (isGameRunning) {
         EraseBoard()
         isGameRunning = false
+        clearInterval(TimerInterval)
         Time = '00:00'
         playingAs = startingColor
         $("#start").text('Start Game')
         $("#GameTime").text('Játékidő:' + Time)
-        $("#currentColor").text('Most lép: ' + colors[playingAs])
+        let lep = $('#' + playingAs + '_player').text()
+        $("#currentColor").text('Most lép: ' + lep)
     } else {
         DrawBoard()
         ResetBoard()
         RefreshClickableSquares()
         isGameRunning = true
+        TimerInterval = setInterval(GameTimer, 1000);
         $("#start").text('Stop Game')
         $("#GameTime").text('Játékidő:' + Time)
-        $("#currentColor").text('Most lép: ' + colors[playingAs])
+        let lep = $('#' + playingAs + '_player').text()
+        $("#currentColor").text('Most lép: ' + lep)
     }
-    console.log(scale_ids)
 }
 
 function setScale(element) {
@@ -366,3 +424,5 @@ $("#newgame").on("click", function() {
 $("#start").on("click", function() {
     StartOrStopGame()
 });
+
+DrawBoard()
