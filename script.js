@@ -1,6 +1,6 @@
 const startingColor = "black"
-var playingAs = startingColor
 const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
+var playingAs = startingColor
 var scale = 10
 var scale_ids = []
 var corner_ids = []
