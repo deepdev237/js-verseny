@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uncaught TypeError: Film ajánló</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="mozi.js"></script>
+</head>
+<body>
+
+    <nav>
+        <h2>Film ajánló</h2>
+        <ul>
+            <a href="../1/index.html"><li>Bemutatkozó</li></a>
+            <a href="../2/index.html"><li id="on_that_site">Filmajánló</li></a>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="content">
+            <h1>Üdvözlünk a "Filmajánló"-ban!</h1>
+            <div class="introduction">
+                <b>Az oldalt az <span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span> csapata készítette.</b>
+            </div>
+            <div class="categories">
+                <div class="like">
+                    <h3>Kedvelt kategóriák:</h3>
+                    <div class="like_container checkbox-container"></div>
+                </div>
+                <div class="dislike">
+                    <h3>Nem kedvelt kategóriák:</h3>
+                    <div class="dislike_container checkbox-container"></div>
+                </div>
+                <button id="done">Keresés</button>
+            </div>
+            <div class="movies"></div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer src="script.js"></script>
+    <title>Uncaught TypeError: Bemutatkozó</title>
+</head>
+<body>
+    <nav>
+        <h2>Bemutatkozó</h2>
+        <ul>
+            <a href="../1/index.html"><li id="on_that_site">Bemutatkozó</li></a>
+            <a href="../2/index.html"><li>Filmajánló</li></a>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="content">
+            <h1 data-translate="udv">Üdvözlünk a "Bemutatkozó"-ban!</h1>
+            <div class="introduction">
+                <b>Az oldalt az <span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span> csapata készítette.</b>
+            </div>
+            <div class="top-container">
+                <div class="school">
+                    <img src="https://media.discordapp.net/attachments/795352960325910549/1025843221592547438/unknown.png" alt="Miskolci SZC Kandó Kálmán Informatikai Technikum logó">
+                    <h1><a href="https://www.kkszki.hu/">Miskolci SZC Kandó Kálmán Informatikai Technikum</a></h1>
+                </div>
+                <h1 id='clock'></h1>
+                <h2>Felkészítő tanár: Kasza László Róbert 👑</h2>
+            </div>
+            <div class="img-container">
+                <div class="images">
+                    <img id="image" alt="">
+                    <h2 id="no_img_text">Nyomd meg a gombot!</h2>
+                </div>
+                <button type="button" id="imgButton">Képek</button>
+            </div>
+            <div class="group-container">
+                <h2><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span></h2>
+                <div class="people">
+                    <div class="person">
+                        <div class="img-frame"><img src="https://cdn.discordapp.com/attachments/935130389058580541/1027182453451935794/DA2C2887-CCF8-499F-91DA-4BEA0EA1FBB9.png" alt="Glonczi T."></div>
+                        <h3>Glonczi Tamás</h3>
+                        <button onclick="ShowOrNot(this)" type="button" id="tamasButton">Tamás bemutatkozó</button>
+                    </div>
+                    <div class="person">
+                        <div class="img-frame"><img src="https://cdn.discordapp.com/attachments/795352960325910549/1025840605240230039/image0.jpg" alt="Luczi A."></div>
+                        <h3>Luczi Alex</h3>
+                        <button onclick="ShowOrNot(this)" type="button" id="alexButton">Alex bemutatkozó</button>
+                    </div>
+                    <div class="person">
+                        <div class="img-frame"><img src="https://cdn.discordapp.com/attachments/795352960325910549/1025842241543077908/image0.jpg" alt="Dluhi D."></div>
+                        <h3>Dluhi Dániel</h3>
+                        <button onclick="ShowOrNot(this)" type="button" id="daniButton">Dani bemutatkozó</button>
+                    </div>
+                </div>
+                <div class="bio">
+                    <div class="bioText" id="tamasText">
+                        <p>Helló!</p>
+                        <p>Tamásnak hívnak.</p>
+                        <p>Hobbijaim: Programozás, Fotózás</p>
+                        <p class="lie">Programozás közben mindig arra törekedek, hogy a kódom számomra és mások számára is olvasható és továbbfejleszthető legyen.</p>
+                    </div>
+                    <div class="bioText" id="alexText">
+                        <p>Helló!</p>
+                        <p>Alexnek hívnak!</p>
+                        <p>Hobbijaim: Programozás, Olvasás, Utazás</p>
+                        <p class="lie">Próbálok kevesebb kóddal többet elérni.</p>
+                    </div>
+                    <div class="bioText" id="daniText">
+                        <p>Helló!</p>
+                        <p>Daninak hívnak!</p>
+                        <p>Hobbijaim: billentyűzetek építése/bütykölése(hobbielektronika), Jazz/egyéb zenei elfoglaltságok, programozás(PY C# HTML CSS)</p>
+                        <p class="lie">Komplex problémákra keresem a lehető legegyszerűbb megoldásokat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
