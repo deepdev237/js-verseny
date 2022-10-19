@@ -218,8 +218,9 @@ function RefreshClickableSquares() {
 
                         if (trapped_ids != null && trapped_ids.length > 0) { //ha tud közbezárni
                             let checkingDisk = GetDiskOnID(checkingID)
+                            let hasColor = $(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))
 
-                            if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))) {
+                            if (hasColor) {
                                 shouldBeClickable = true
                             }
                         }
@@ -242,18 +243,27 @@ function canTrap(direction, startingID) {
     let trapped_ids = []
     let checkingID = GetIDInDirection(direction, startingID)
     let checkingDisk = GetDiskOnID(checkingID)
+    let emptyInTheWay = false
 
     while (!gotSameColor || checkingDisk === null) {
-        let EmptySquare = $(checkingDisk).hasClass(playingAs) && $(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable")
-        if (EmptySquare) {
-            gotSameColor = true;
-        } else {
-            if ($(checkingDisk).hasClass(playingAs)) {
-                gotSameColor = true;
-            } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
-                trapped_ids.push(checkingID)
-            }
+        let isEmpty = $(checkingDisk).hasClass(playingAs) == false && $(checkingDisk).hasClass(opposite_color) == false && $(checkingDisk).hasClass("clickable") == false
+        if (isEmpty) {
+            emptyInTheWay = true
         }
+        if ($(checkingDisk).hasClass(playingAs)) {
+            gotSameColor = true;
+        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
+            trapped_ids.push(checkingID)
+        }
+        
+        console.log(isEmpty, checkingID)
+        /*
+        if ($(checkingDisk).hasClass(playingAs) || !hasColor) {
+            gotSameColor = true;
+        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
+            trapped_ids.push(checkingID)
+        }
+        */
         
         if (checkingID != null) {
             checkingID = GetIDInDirection(direction, checkingID)
@@ -267,7 +277,7 @@ function canTrap(direction, startingID) {
         }
     }
     if (gotSameColor) {
-        if (trapped_ids.length > 0) {
+        if (trapped_ids.length > 0 && !emptyInTheWay) {
             return trapped_ids;
         } else {
             return null;
