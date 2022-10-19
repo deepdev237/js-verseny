@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background-size: 1800% 1800%;
+    
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+      animation: rainbow 18s ease infinite;}
+    
+    @-webkit-keyframes rainbow {
+        0%{background-position:0% 82%}
+        50%{background-position:100% 19%}
+        100%{background-position:0% 82%}
+    }
+    @-moz-keyframes rainbow {
+        0%{background-position:0% 82%}
+        50%{background-position:100% 19%}
+        100%{background-position:0% 82%}
+    }
+    @-o-keyframes rainbow {
+        0%{background-position:0% 82%}
+        50%{background-position:100% 19%}
+        100%{background-position:0% 82%}
+    }
+    @keyframes rainbow { 
+        0%{background-position:0% 82%}
+        50%{background-position:100% 19%}
+        100%{background-position:0% 82%}
+    }
+
+/*main*/
+
+main {
+    justify-content: center;
+    text-align: center;
+}
+
+main .content {
+    margin: 0 auto;
+}
+
+/*logo*/
+
+span#logo span#yellow {
+    color: rgb(230, 234, 0);
+}
+
+span#logo span#blue {
+    color: rgb(0, 106, 255);
+}
+
+span#logo span.Courier_New {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+span#logo span#red {
+    color: rgba(215, 0, 0, 0.837);
+}
+
+/*table*/
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table {
+    width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255, 255, 255, 0.185);
+}
+
+/*disk*/
+
+.disk {
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 5;
+    height: 8.5vh;
+}
+
+.white {
+    background: white;
+}
+
+.black {
+    background: black;
+}
+
+.clickable {
+    border-radius: 0;
+    background: rgba(161, 161, 161, 0.596);
+}
+
+@media screen and (max-width: 992px) {
+    
+}
+
+.valami {
+    display: none;
+}

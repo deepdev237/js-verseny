@@ -1,4 +1,4 @@
-# js-verseny
+# js-verseny 2. forduló
 
 Uncaught TypeError csapata
 
