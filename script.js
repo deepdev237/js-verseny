@@ -1,8 +1,10 @@
+const startingColor = "black"
+var playingAs = startingColor
+const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
 var scale = 10
 var scale_ids = []
 var corner_ids = []
 const startingColor = "black"
-var playingAs = startingColor
 var isGameRunning = false
 var GameTime = '00:00'
 
@@ -129,8 +131,6 @@ function ResetBoard() {
     });
 }
 
-const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
-
 function GetIDInDirection(direction, id) {
     let column = parseInt(id.split("-")[0])
     let row = parseInt(id.split("-")[1])
@@ -174,25 +174,6 @@ function oppositeColor(color) {
     }
 }
 
-function isSafeSquare(disk) {
-    if (($(disk).hasClass("white")) || ($(disk).hasClass("black"))) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-function getColorOnID(id) {
-    let disk = GetDiskOnID(id)
-    if ($(disk).hasClass("white")) {
-        return "white";
-    } else if ($(disk).hasClass("black")) {
-        return "black";
-    } else {
-        return null;
-    }
-}
-
 function checkForGameOver() {
     var clickables = $(".clickable").map(function() {
         return this.innerHTML;
@@ -203,30 +184,52 @@ function checkForGameOver() {
     }
 }
 
+function calculateWinner() {
+    let whitePoints = 0
+    let blackPoints = 0
+    scale_ids.forEach(ids => {
+        ids.forEach(id => {
+            let disk = GetDiskOnID(id)
+            
+            if ($(disk).hasClass("white")) {
+                whitePoints += 1
+            } else if ($(disk).hasClass("black")) {
+                blackPoints += 1
+            }
+        });
+    });
+    if (whitePoints > blackPoints) {
+        //winner is white
+    } else {
+        //winner is black
+    }
+}
+
 function RefreshClickableSquares() {
     scale_ids.forEach(ids => {
         ids.forEach(id => {
             let disk = GetDiskOnID(id)
-            if (isSafeSquare(disk)) {
-                let hasDisksAround = false
-                let can_trap = false
+
+            if ((($(disk).hasClass("white")) || ($(disk).hasClass("black"))) === false) { //ha nincs korong a cellán
+                let shouldBeClickable = false
+
                 directions.forEach(direction => {
                     let checkingID = GetIDInDirection(direction, id)
+
                     if (checkingID != null) {
                         let trapped_ids = canTrap(direction, id)
-                        if (trapped_ids != null && trapped_ids.length > 0) {
-                            if (getColorOnID(checkingID) != playingAs) { // if first trapped id isn't the same as the playing color
-                                can_trap = true
-                                let checkingDisk = GetDiskOnID(checkingID)
-                                if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))) {
-                                    hasDisksAround = true
-                                }
+
+                        if (trapped_ids != null && trapped_ids.length > 0) { //ha tud közbezárni
+                            let checkingDisk = GetDiskOnID(checkingID)
+
+                            if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))) {
+                                shouldBeClickable = true
                             }
                         }
                     }
                 });
 
-                if (can_trap && hasDisksAround && $(disk).hasClass("clickable") === false) {
+                if (shouldBeClickable && $(disk).hasClass("clickable") === false) {
                     $(disk).addClass("clickable")
                 } else {
                     $(disk).removeClass("clickable");
@@ -299,10 +302,10 @@ function GameTimer() {
         let minute = parseInt(GameTime.split(':')[0])
         let second = parseInt(GameTime.split(':')[1])
         if (second == 60) {
-            minute = minute + 1
+            minute += 1
             second = 0
         } else {
-            second = second + 1
+            second += 1
         }
         GameTime = minute + ':' + second
         $("#GameTime").text('Játékidő:' + GameTime)
