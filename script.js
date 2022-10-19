@@ -1,6 +1,6 @@
 const startingColor = "black"
-var playingAs = startingColor
 const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
+var playingAs = startingColor
 var scale = 10
 var scale_ids = []
 var corner_ids = []
@@ -21,9 +21,6 @@ for (let i = 0; i < scale; i++) {
     corner_ids.push({leftcorner, rightcorner})
     scale_ids.push(ids)
 }
-
-console.log(corner_ids)
-console.log(scale_ids)
 
 scale_ids.forEach(ids => {
     let tr = []
