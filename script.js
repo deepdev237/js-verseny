@@ -243,9 +243,9 @@ function canTrap(direction, startingID) {
     let checkingDisk = GetDiskOnID(checkingID)
 
     while (!gotSameColorOrClickable || checkingDisk === null) {
-        if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass("clickable") == true) {
+        if ($(checkingDisk).hasClass(playingAs)) {
             gotSameColorOrClickable = true;
-        } else if ($(checkingDisk).hasClass(opposite_color)) {
+        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
             trapped_ids.push(checkingID)
         }
         if (checkingID != null) {
