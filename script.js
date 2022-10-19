@@ -1,4 +1,4 @@
-var scale = 8
+var scale = 10
 var scale_ids = []
 var corner_ids = []
 var startingColor = "black"
@@ -198,7 +198,7 @@ function checkForGameOver() {
         return this.innerHTML;
     }).get();
     if (clickables.length == 0) {
-        //Game Over
+        $('.valami').show();
     }
 }
 
