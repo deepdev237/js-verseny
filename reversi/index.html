@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,19 +10,21 @@
     <link rel="stylesheet" href="style.css">
     <title>Uncaught TypeError</title>
 </head>
+
 <body>
     <header>
-        <h1><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span></h1>
+        <h1><span id="logo"><span id="yellow">Uncaught</span> <span id="blue" class="Courier_New">Type</span><span id="red" class="Courier_New">Error</span></span>
+        </h1>
     </header>
     <main>
         <div class="game_over">
             <div class="over-content">
                 <img src="https://cdn.discordapp.com/attachments/935130389058580541/1032232960956575785/gameOver.png" alt="">
-                <div style="line-height: 2.5vh;">
-                    <p>Nyertes: <span id="winner">Black</span></p>
-                    <p>Játék idő: <span id="game_time">1:50</span></p>
-                    <p><span id="black_player">Teszt János</span> játékos: <span id="black_point">25</span> pont</p>
-                    <p><span id="white_player">Próba István</span> játékos: <span id="white_point">10</span> pont</p>
+                <div style="line-height: 3vh;">
+                    <p>Nyertes: <span id="winner"></span></p>
+                    <p>Játék idő: <span id="game_time"></span></p>
+                    <p><span id="black_player"></span> játékos: <span id="black_point"></span> pont</p>
+                    <p><span id="white_player"></span> játékos: <span id="white_point"></span> pont</p>
                     <div class="buttons">
                         <button style="margin-right: 5vh;" onclick='$(".game_over").hide();'>Bezárás</button>
                         <button id="newgame">Újra</button>
@@ -29,24 +32,31 @@
                 </div>
             </div>
         </div>
-        <div class="left">
+        <div class="left panel">
+            <h1>Beállítások:</h1>
             <div class="game-info-controls">
-                <p id="currentColor">Most lép: </p>
-                <p id="GameTime">Játékidő: </p>
-                <button onclick="setScale(this)">4x4</button>
-                <button onclick="setScale(this)">6x6</button>
-                <button onclick="setScale(this)">8x8</button>
-                <button onclick="setScale(this)">10x10</button>
-                <button id="start">Start Game</button>
+                <p id="currentColor">Most lép: -</p>
+                <p id="GameTime">Játékidő: 00:00</p>
+                <div class="buttons">
+                    <button onclick="setScale(this)">4x4</button>
+                    <button onclick="setScale(this)">6x6</button>
+                    <button onclick="setScale(this)">8x8</button>
+                    <button onclick="setScale(this)">10x10</button>
+                </div>
+                <button id="start" style="width: 50%;">Játék indítása</button>
             </div>
         </div>
         <div class="content">
             <table><tbody></tbody></table>
         </div>
-        <div class="right">
-            <p>sdfsdfsdfsd</p>
-            <p>sdfsdfsdfsd</p>
+        <div class="right panel">
+            <h1>Játékosok:</h1>
+            <p>Fekete - <span id="black_username">Player0</span><input type="text" id="black_username-input"></p>
+            <button id="edit_playerone">Szerkesztés</button>
+            <p>Fehér - <span id="white_username">Player1</span><input type="text" id="white_username-input"></p>
+            <button id="edit_playertwo">Szerkesztés</button>
         </div>
     </main>
 </body>
+
 </html>
