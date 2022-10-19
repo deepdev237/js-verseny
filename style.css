@@ -120,6 +120,26 @@ main .right p span {
     font-weight: bold;
 }
 
+main .right button {
+    margin-top: 1.5vh;
+    width: 50%;
+}
+
+main .right input {
+    width: 35%;
+    padding: 1.5%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.321);
+    border: white 1px solid;
+    border-radius: 5px;
+    color: white;
+}
+
+main .right p input#black_username-input,
+main .right p input#white_username-input {
+    display: none;
+}
+
 
 /*logo*/
 
@@ -184,7 +204,7 @@ table {
 .clickable {
     cursor: pointer;
     border-radius: 0;
-    background: rgba(104, 104, 104, 0.596);
+    background: rgba(0, 0, 0, 0.607);
 }
 
 
