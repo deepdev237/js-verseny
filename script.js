@@ -1,34 +1,38 @@
 const startingColor = "black"
 const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
 var playingAs = startingColor
-var scale = 10
+var scale = 8
 var scale_ids = []
 var corner_ids = []
 var isGameRunning = false
 var GameTime = '00:00'
 
-for (let i = 0; i < scale; i++) {
-    let ids = []
-    for (let x = 0; x < scale; x++) {
-        let id = i + '-' + x
-        ids.push(id)
+function boardDraw() {
+    $('table tbody').html();
+    for (let i = 0; i < scale; i++) {
+        let ids = []
+        for (let x = 0; x < scale; x++) {
+            let id = i + '-' + x
+            ids.push(id)
+        }
+        let leftcorner = parseInt(ids[i].split('-')[0])
+        let rightcorner = parseInt(ids[(ids.length - 1 - i)].split('-')[1])
+        if (i == (scale / 2)) {
+            rightcorner = parseInt(ids[(ids.length - i)].split('-')[1])
+        }
+        corner_ids.push({leftcorner, rightcorner})
+        scale_ids.push(ids)
     }
-    let leftcorner = parseInt(ids[i].split('-')[0])
-    let rightcorner = parseInt(ids[(ids.length - 1 - i)].split('-')[1])
-    if (i == (scale / 2)) {
-        rightcorner = parseInt(ids[(ids.length - i)].split('-')[1])
-    }
-    corner_ids.push({leftcorner, rightcorner})
-    scale_ids.push(ids)
-}
 
-scale_ids.forEach(ids => {
-    let tr = []
-    ids.forEach(id => {
-        tr.push('<td id="' + id + '"><div class="disk"></div></td>')
-    });
-    $('table tbody').append('<tr>' + tr + '</tr>');
-});
+    scale_ids.forEach(ids => {
+        let tr = []
+        ids.forEach(id => {
+            tr.push('<td id="' + id + '"><div class="disk"></div></td>')
+        });
+        $('table tbody').append('<tr>' + tr + '</tr>');
+    });        
+}
+boardDraw();
 
 /* Pontozás - félig működik
 for (let x = 0; x < (scale / 2); x++) {
@@ -328,6 +332,7 @@ function StartOrStopGame() {
         $("#currentColor").text('Most lép:' + playingAs)
     } else {
         ResetBoard()
+        boardDraw()
         RefreshClickableSquares()
         isGameRunning = true
         $("#start").text('Stop Game')
@@ -335,3 +340,14 @@ function StartOrStopGame() {
         $("#currentColor").text('Most lép:' + playingAs)
     }
 }
+
+function setScale(num) {
+    scale = parseInt(num);
+    console.log('set scale: ' + scale)
+}
+
+$("#setScaleButton").on("click", function () {
+    let num = $(this).text()[0]
+    console.log(num)
+    setScale(num)
+})
