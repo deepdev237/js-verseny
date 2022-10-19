@@ -22,9 +22,6 @@ for (let i = 0; i < scale; i++) {
     scale_ids.push(ids)
 }
 
-console.log(corner_ids)
-console.log(scale_ids)
-
 scale_ids.forEach(ids => {
     let tr = []
     ids.forEach(id => {
