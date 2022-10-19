@@ -1,4 +1,4 @@
-var scale = 8
+var scale = 10
 var scale_ids = []
 var corner_ids = []
 var startingColor = "black"
@@ -198,56 +198,51 @@ function checkForGameOver() {
         return this.innerHTML;
     }).get();
     if (clickables.length == 0) {
-        //Game Over
+        $('.valami').show();
     }
 }
 
 function RefreshClickableSquares() {
-    for (let column = 0; column < scale; column++) {
-        for (let row = 0; row < scale; row++) {
-            let id = column + '-' + row
+    scale_ids.forEach(ids => {
+        ids.forEach(id => {
             let disk = GetDiskOnID(id)
             if (isSafeSquare(disk)) {
-                let hasDisksAround = false
+                let shouldBeClickable = false
                 let can_trap = false
                 directions.forEach(direction => {
                     let checkingID = GetIDInDirection(direction, id)
                     if (checkingID != null) {
                         let trapped_ids = canTrap(direction, id)
                         if (trapped_ids != null && trapped_ids.length > 0) {
-                            if (getColorOnID(checkingID) != playingAs) { // if first trapped id isn't the same as the playing color
-                                can_trap = true
-                                let checkingDisk = GetDiskOnID(checkingID)
-                                if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))) {
-                                    hasDisksAround = true
-                                }
+                            let checkingDisk = GetDiskOnID(checkingID)
+                            if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass(oppositeColor(playingAs))) {
+                                shouldBeClickable = true
                             }
                         }
                     }
                 });
 
-                if (can_trap && hasDisksAround && $(disk).hasClass("clickable") === false) {
+                if (shouldBeClickable && $(disk).hasClass("clickable") === false) {
                     $(disk).addClass("clickable")
                 } else {
                     $(disk).removeClass("clickable");
                 }
             }
-            //console.log('')
-        }
-    }
+        });
+    });
 }
 
 function canTrap(direction, startingID) {
-    let gotSameColor = false;
+    let gotSameColorOrClickable = false;
     let opposite_color = oppositeColor(playingAs)
     let trapped_ids = []
     let checkingID = GetIDInDirection(direction, startingID)
     let checkingDisk = GetDiskOnID(checkingID)
 
-    while (!gotSameColor || checkingDisk === null) {
+    while (!gotSameColorOrClickable || checkingDisk === null) {
         if ($(checkingDisk).hasClass(playingAs)) {
-            gotSameColor = true;
-        } else if ($(checkingDisk).hasClass(opposite_color)) {
+            gotSameColorOrClickable = true;
+        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
             trapped_ids.push(checkingID)
         }
         if (checkingID != null) {
@@ -261,7 +256,7 @@ function canTrap(direction, startingID) {
             break;
         }
     }
-    if (gotSameColor) {
+    if (gotSameColorOrClickable) {
         if (trapped_ids.length > 0) {
             return trapped_ids;
         } else {
