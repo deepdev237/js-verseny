@@ -259,16 +259,7 @@ function canTrap(direction, startingID) {
         } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
             trapped_ids.push(checkingID)
         }
-        
-        console.log(isEmpty, checkingID)
-        /*
-        if ($(checkingDisk).hasClass(playingAs) || !hasColor) {
-            gotSameColor = true;
-        } else if ($(checkingDisk).hasClass(opposite_color) && $(checkingDisk).hasClass("clickable") == false) {
-            trapped_ids.push(checkingID)
-        }
-        */
-        
+
         if (checkingID != null) {
             checkingID = GetIDInDirection(direction, checkingID)
             if (checkingID != null) {
