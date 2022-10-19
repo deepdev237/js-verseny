@@ -4,7 +4,6 @@ const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "righ
 var scale = 10
 var scale_ids = []
 var corner_ids = []
-const startingColor = "black"
 var isGameRunning = false
 var GameTime = '00:00'
 
