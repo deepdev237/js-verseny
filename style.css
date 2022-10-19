@@ -53,10 +53,6 @@ main .left {
     display: inline-block;
 }
 
-main .left h1 {
-    text-align: left;
-}
-
 /*right*/
 
 main .right {
@@ -127,6 +123,33 @@ table {
     background: rgba(104, 104, 104, 0.596);
 }
 
+/*game_over*/
+
+main .game_over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.699);
+}
+
+main .game_over .over-content {
+    border-radius: 5px;
+    width: 25%;
+    padding: 5%;
+    color: white;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.185);
+}
+
+main .game_over .over-content h3 {
+    margin-bottom: 2vh;
+}
+
 @media screen and (max-width: 880px) {
     table {
         width: 85vw;
@@ -134,8 +157,4 @@ table {
     table tr {
         height: 1vw;
     }
-}
-
-.valami {
-    display: none;
 }
