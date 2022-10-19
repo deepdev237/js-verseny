@@ -71,8 +71,8 @@ function DrawBoard() {
             });
 
             playingAs = oppositeColor(playingAs)
-            let lep = $('#' + playingAs + '_player').text()
-            $("#currentColor").text('Most lép: ' + lep)
+            let lep = $('#' +  playingAs + '_username').html()
+            $("#currentColor").text('Most lép: ' + lep + '(' + colors[playingAs] + ')')
 
             RefreshClickableSquares()
             
@@ -349,7 +349,7 @@ function StartOrStopGame() {
         $("#GameTime").text('Játékidő:' + Time)
 
         let lep = $('#' +  playingAs + '_username').html()
-        $("#currentColor").text('Most lép: ' + lep)
+        $("#currentColor").text('Most lép: ' + lep + '(' + colors[playingAs] + ')')
     } else {
         DrawBoard()
         ResetBoard()
@@ -359,7 +359,7 @@ function StartOrStopGame() {
         $("#start").text('Stop Game')
         $("#GameTime").text('Játékidő:' + Time)
         let lep = $('#' +  playingAs + '_username').html()
-        $("#currentColor").text('Most lép: ' + lep)
+        $("#currentColor").text('Most lép: ' + lep + '(' + colors[playingAs] + ')')
     }
 }
 
