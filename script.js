@@ -425,4 +425,16 @@ $("#start").on("click", function() {
     StartOrStopGame()
 });
 
+//inputos nevek
+
+$("#edit_playerone").on("click", function() {
+    $('#black_username').hide();
+    $('#black_username-input').show();
+});
+
+$("#edit_playertwo").on("click", function() {
+    $('#white_username').hide();
+    $('#white_username-input').show();
+});
+
 DrawBoard()
