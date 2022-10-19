@@ -395,7 +395,9 @@ function StartOrStopGame() {
         playingAs = startingColor
         $("#start").text('Start Game')
         $("#GameTime").text('Játékidő:' + Time)
-        let lep = $('#' + playingAs + '_player').text()
+
+        let lep = $('#' +  playingAs + '_username').html()
+        console.log('lep:' + lep)
         $("#currentColor").text('Most lép: ' + lep)
     } else {
         DrawBoard()
@@ -405,7 +407,8 @@ function StartOrStopGame() {
         TimerInterval = setInterval(GameTimer, 1000);
         $("#start").text('Stop Game')
         $("#GameTime").text('Játékidő:' + Time)
-        let lep = $('#' + playingAs + '_player').text()
+        let lep = $('#' +  playingAs + '_username').html()
+        console.log('lep:' + lep)
         $("#currentColor").text('Most lép: ' + lep)
     }
 }
@@ -428,13 +431,27 @@ $("#start").on("click", function() {
 //inputos nevek
 
 $("#edit_playerone").on("click", function() {
-    $('#black_username').hide();
-    $('#black_username-input').show();
+    if ($('#black_username').is(":hidden")) {
+        $('#black_username').show();
+        $('#black_username-input').hide();
+    } else {
+        $('#black_username').hide();
+        $('#black_username-input').show();
+    }
+    blackPlayerName = $('#black_username-input').val()
+    $('#black_username').html(blackPlayerName)
 });
 
 $("#edit_playertwo").on("click", function() {
-    $('#white_username').hide();
-    $('#white_username-input').show();
+    if ($('#white_username').is(":hidden")) {
+        $('#white_username').show();
+        $('#white_username-input').hide();
+    } else {
+        $('#white_username').hide();
+        $('#white_username-input').show();
+    }
+    whitePlayerName = $('#white_username-input').val()
+    $('#white_username').html(whitePlayerName)
 });
 
 DrawBoard()
