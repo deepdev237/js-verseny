@@ -1,7 +1,7 @@
 var scale = 10
 var scale_ids = []
 var corner_ids = []
-var startingColor = "black"
+const startingColor = "black"
 var playingAs = startingColor
 var isGameRunning = false
 var GameTime = '00:00'
@@ -198,7 +198,8 @@ function checkForGameOver() {
         return this.innerHTML;
     }).get();
     if (clickables.length == 0) {
-        $('.valami').show();
+        window.alert("Game Over");
+        $("#start").click();
     }
 }
 
