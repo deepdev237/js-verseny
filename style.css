@@ -126,6 +126,7 @@ table {
 /*game_over*/
 
 main .game_over {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -137,7 +138,7 @@ main .game_over {
 main .game_over .over-content {
     border-radius: 5px;
     width: 25%;
-    padding: 5%;
+    padding: 2%;
     color: white;
     position: relative;
     top: 50%;
@@ -146,8 +147,25 @@ main .game_over .over-content {
     background-color: rgba(255, 255, 255, 0.185);
 }
 
-main .game_over .over-content h3 {
+main .game_over .over-content img {
+    width: 50%;
     margin-bottom: 2vh;
+}
+
+main .game_over .over-content .buttons {
+    margin-top: 1.5vh;
+    justify-content: space-between;
+}
+
+/*buttons*/
+
+main button {
+    cursor: pointer;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.55);
+    border-radius: 5px;
+    width: 25%;
+    padding: 2%;
 }
 
 @media screen and (max-width: 880px) {
@@ -156,5 +174,10 @@ main .game_over .over-content h3 {
     }
     table tr {
         height: 1vw;
+    }
+
+    main .game_over .over-content {
+        padding: 5%;
+        width: 70%;
     }
 }

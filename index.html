@@ -13,9 +13,17 @@
     <main>
         <div class="game_over">
             <div class="over-content">
-                <h3>Game over!</h3>
-                <p>Nyertes: <span id="winner">Black</span></p>
-                <p>Játék idő: <span id="game_time">1:50</span></p>
+                <img src="https://cdn.discordapp.com/attachments/935130389058580541/1032232960956575785/gameOver.png" alt="">
+                <div style="line-height: 2.5vh;">
+                    <p>Nyertes: <span id="winner">Black</span></p>
+                    <p>Játék idő: <span id="game_time">1:50</span></p>
+                    <p><span id="black_gamer">Teszt János</span> játékos: <span id="black_point">25</span> pont</p>
+                    <p><span id="white_gamer_gamer">Próba István</span> játékos: <span id="white_point">10</span> pont</p>
+                    <div class="buttons">
+                        <button style="margin-right: 5vh;" onclick='$(".game_over").hide();'>Bezárás</button>
+                        <button>Újra</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="left">
@@ -25,9 +33,6 @@
                 <p id="GameTime">Játékidő: </p>
                 <button id="start">Start Game</button>
             </div>
-        </div>
-        <div class="valami">
-            <h1>halj meg!</h1>
         </div>
         <div class="content">
             <table><tbody></tbody></table>
