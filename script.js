@@ -1,8 +1,8 @@
 const startingColor = "black"
 const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
 const colors = {
-    ["white"] : "Fehér",
-    ["black"] : "Fekete"
+    ["white"]: "Fehér",
+    ["black"]: "Fekete"
 }
 whitePlayerName = "Player0"
 blackPlayerName = "Player1"
@@ -29,7 +29,7 @@ function DrawBoard() {
         if (i == (scale / 2)) {
             rightcorner = parseInt(ids[(ids.length - i)].split('-')[1])
         }
-        corner_ids.push({leftcorner, rightcorner})
+        corner_ids.push({ leftcorner, rightcorner })
         scale_ids.push(ids)
     }
 
@@ -41,7 +41,7 @@ function DrawBoard() {
         $('table tbody').append('<tr>' + tr + '</tr>');
     });
 
-    $(".content table tbody tr td").on("click", function () {
+    $(".content table tbody tr td").on("click", function() {
         if ($(this).children('div').hasClass("clickable")) {
             let id = this.id
 
@@ -57,11 +57,11 @@ function DrawBoard() {
             });
 
             playingAs = oppositeColor(playingAs)
-            $("#currentColor").text('Most lép:' + playingAs)
+            $("#currentColor").text('Most lép: ' + playingAs)
 
             RefreshClickableSquares()
-            //checking for game over
-            var clickables = $(".clickable").map(function() {return this.innerHTML;}).get();
+                //checking for game over
+            var clickables = $(".clickable").map(function() { return this.innerHTML; }).get();
             if (clickables.length == 0) {
                 calculateWinner()
             }
@@ -76,7 +76,7 @@ function calculateWinner() {
     scale_ids.forEach(ids => {
         ids.forEach(id => {
             let disk = GetDiskOnID(id)
-            
+
             if ($(disk).hasClass("white")) {
                 whitePoints += 1
             } else if ($(disk).hasClass("black")) {
@@ -177,7 +177,7 @@ function ResetDiskOnID(id) {
 function GetIDInDirection(direction, id) {
     let column = parseInt(id.split("-")[0])
     let row = parseInt(id.split("-")[1])
-    
+
     if (direction === "leftup") {
         column = column - 1
         row = row - 1
@@ -199,7 +199,7 @@ function GetIDInDirection(direction, id) {
         column = column + 1
         row = row + 1
     }
-    
+
     if ((row < 0 || row > (scale - 1)) || (column < 0 || column > (scale - 1))) { // if id is outside of the board
         return null;
     } else {
@@ -322,10 +322,10 @@ function ResetBoard() {
     EraseBoard()
     let halfID = (scale / 2)
     let startingIDs = []
-    startingIDs.push({"id" : (halfID - 1) + '-' + halfID, "color" : "black"})
-    startingIDs.push({"id" : halfID + '-' + (halfID - 1), "color" : "black"})
-    startingIDs.push({"id" : (halfID - 1) + '-' + (halfID - 1), "color" : "white"})
-    startingIDs.push({"id" : halfID + '-' + halfID, "color" : "white"})
+    startingIDs.push({ "id": (halfID - 1) + '-' + halfID, "color": "black" })
+    startingIDs.push({ "id": halfID + '-' + (halfID - 1), "color": "black" })
+    startingIDs.push({ "id": (halfID - 1) + '-' + (halfID - 1), "color": "white" })
+    startingIDs.push({ "id": halfID + '-' + halfID, "color": "white" })
     startingIDs.forEach(element => {
         SetDiskOnID(element.id, element.color)
     });
@@ -339,7 +339,7 @@ function StartOrStopGame() {
         playingAs = startingColor
         $("#start").text('Start Game')
         $("#GameTime").text('Játékidő:' + Time)
-        $("#currentColor").text('Most lép:' + colors[playingAs])
+        $("#currentColor").text('Most lép: ' + colors[playingAs])
     } else {
         DrawBoard()
         ResetBoard()
@@ -347,7 +347,7 @@ function StartOrStopGame() {
         isGameRunning = true
         $("#start").text('Stop Game')
         $("#GameTime").text('Játékidő:' + Time)
-        $("#currentColor").text('Most lép:' + colors[playingAs])
+        $("#currentColor").text('Most lép: ' + colors[playingAs])
     }
     console.log(scale_ids)
 }
@@ -357,12 +357,12 @@ function setScale(element) {
     scale = parseInt(num);
 }
 
-$("#newgame").on("click", function () {
+$("#newgame").on("click", function() {
     $(".game_over").hide();
     StartOrStopGame()
     StartOrStopGame()
 })
 
-$("#start").on("click", function () {
+$("#start").on("click", function() {
     StartOrStopGame()
 });
