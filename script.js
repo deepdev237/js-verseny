@@ -1,7 +1,7 @@
 const startingColor = "black"
 const directions = ["leftup", "left", "leftdown", "up", "down", "rightup", "right", "rightdown"]
 var playingAs = startingColor
-var scale = 10
+var scale = 8
 var scale_ids = []
 var corner_ids = []
 var isGameRunning = false
@@ -176,7 +176,7 @@ function checkForGameOver() {
     }).get();
     if (clickables.length == 0) {
         calculateWinner()
-        $('.valami').show();
+        $('.game_over').show();
     }
 }
 
