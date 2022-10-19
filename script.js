@@ -203,9 +203,8 @@ function checkForGameOver() {
 }
 
 function RefreshClickableSquares() {
-    for (let column = 0; column < scale; column++) {
-        for (let row = 0; row < scale; row++) {
-            let id = column + '-' + row
+    scale_ids.forEach(ids => {
+        ids.forEach(id => {
             let disk = GetDiskOnID(id)
             if (isSafeSquare(disk)) {
                 let hasDisksAround = false
@@ -232,21 +231,20 @@ function RefreshClickableSquares() {
                     $(disk).removeClass("clickable");
                 }
             }
-            //console.log('')
-        }
-    }
+        });
+    });
 }
 
 function canTrap(direction, startingID) {
-    let gotSameColor = false;
+    let gotSameColorOrClickable = false;
     let opposite_color = oppositeColor(playingAs)
     let trapped_ids = []
     let checkingID = GetIDInDirection(direction, startingID)
     let checkingDisk = GetDiskOnID(checkingID)
 
-    while (!gotSameColor || checkingDisk === null) {
-        if ($(checkingDisk).hasClass(playingAs)) {
-            gotSameColor = true;
+    while (!gotSameColorOrClickable || checkingDisk === null) {
+        if ($(checkingDisk).hasClass(playingAs) || $(checkingDisk).hasClass("clickable") == true) {
+            gotSameColorOrClickable = true;
         } else if ($(checkingDisk).hasClass(opposite_color)) {
             trapped_ids.push(checkingID)
         }
@@ -261,7 +259,7 @@ function canTrap(direction, startingID) {
             break;
         }
     }
-    if (gotSameColor) {
+    if (gotSameColorOrClickable) {
         if (trapped_ids.length > 0) {
             return trapped_ids;
         } else {
