@@ -45,6 +45,25 @@ main .content {
     margin: 0 auto;
 }
 
+/*left*/
+
+main .left {
+    width: 20%;
+    text-align: center;
+    display: inline-block;
+}
+
+main .left h1 {
+    text-align: left;
+}
+
+/*right*/
+
+main .right {
+    width: 20%;
+    display: inline-block;
+}
+
 /*logo*/
 
 span#logo span#yellow {
@@ -65,14 +84,23 @@ span#logo span#red {
 
 /*table*/
 
-table, th, td {
-    border: 1px solid black;
+.content {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+main .content table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td {
+    border: 1px solid rgba(0, 0, 0, 0.466);
 }
 
 table {
     width: 850px;
-    margin-left: auto;
-    margin-right: auto;
     background-color: rgba(255, 255, 255, 0.185);
 }
 
@@ -96,11 +124,16 @@ table {
 
 .clickable {
     border-radius: 0;
-    background: rgba(161, 161, 161, 0.596);
+    background: rgba(104, 104, 104, 0.596);
 }
 
-@media screen and (max-width: 992px) {
-    
+@media screen and (max-width: 880px) {
+    table {
+        width: 85vw;
+    }
+    table tr {
+        height: 1vw;
+    }
 }
 
 .valami {
