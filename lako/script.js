@@ -35,13 +35,24 @@ const PlayerControls = {
         "toggle" : false,
     },
     "shift" : { //todo
-        "key" : 0,
+        "key" : 16,
+        "toggle" : false,
+    },
+    "ctrl" : { //todo
+        "key" : 17,
         "toggle" : false,
     }
 }
 
+const playerStep = 2
+var playerSpeed = 1
+
 function isOutsideOfCanvas(pos) { //todo
-    return false;
+    if (pos.x < 0 || pos.y < 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function main() {
@@ -55,17 +66,27 @@ function main() {
 
     let newPosition = {x: PlayerPosition.x, y: PlayerPosition.y}
 
+    if (PlayerControls["shift"].toggle == true) {
+        console.log("shift")
+        playerSpeed = 2
+    } else if (PlayerControls["ctrl"].toggle == true) {
+        console.log("ctrl")
+        playerSpeed = 0.5
+    } else {
+        playerSpeed = 1
+    }
+
     if (PlayerControls["w"].toggle == true) {
-        newPosition.y--;
+        newPosition.y -= (playerStep * playerSpeed);
     }
     if (PlayerControls["a"].toggle == true) {
-        newPosition.x--;
+        newPosition.x -= (playerStep * playerSpeed);
     }
     if (PlayerControls["s"].toggle == true) {
-        newPosition.y += 1;
+        newPosition.y += (playerStep * playerSpeed);
     }
     if (PlayerControls["d"].toggle == true) {
-        newPosition.x += 1;
+        newPosition.x += (playerStep * playerSpeed);
     }
 
     if (!isOutsideOfCanvas(newPosition)) {
