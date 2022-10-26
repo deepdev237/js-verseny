@@ -47,24 +47,14 @@ const playerStep = 2
 var playerSpeed = 1
 
 //Walls
+const WallWidth = 5
+const windowWidth = 2
 const Walls = {
-    "outer" : {
-        "wall" : {
-            "from" : [10, 10],
-            "to" : [600, 10]
-        },
-        
-        "window" : {
-            "from" : [600, 10],
-            "to" : [700, 10]
-        },
-        
-        "wall" : {
-            "from" : [700, 10],
-            "to" : [1200, 10]
-        },
-        
-    }
+    "outer" : [
+        {type : 'wall', from: [10, 10], to: [600, 10]},
+        {type : 'window', from: [600, 10], to: [700, 10]},
+        {type : 'wall', from: [700, 10], to: [1200, 10]}
+    ]
 }
 
 function isOutsideOfCanvas(pos) {
@@ -84,43 +74,22 @@ function main() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "blue";
     ctx.fillRect(PlayerPosition.x, PlayerPosition.y, 100, 100);
- 
+
     for (const key in Walls) {
-        if (Object.hasOwnProperty.call(Walls, key)) {
-            const step = Walls[key];
+        const steps = Walls[key];
+        steps.forEach(step => {
+            ctx.beginPath(); // Start a new path
             
-            for (const key in step) {
-                
-                if (Object.hasOwnProperty.call(step, key)) {
-                    const steps = step[key];
-                    if (key == "wall") {
-                        ctx.beginPath(); // Start a new path
-                        ctx.lineWidth = 3
-                        ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
-                        ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
-                        ctx.stroke(); // Render the path
-                    }
-                }
-                
+            if (step.type == "wall") {
+                ctx.lineWidth = WallWidth
+            } else if (step.type == "window") {
+                ctx.lineWidth = windowWidth
             }
             
-            
-            for (const key in step) {
-                
-                if (Object.hasOwnProperty.call(step, key)) {
-                    const steps = step[key];
-                    if (key == "window") {
-                        ctx.beginPath(); // Start a new path
-                        ctx.lineWidth = 1
-                        ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
-                        ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
-                        ctx.stroke(); // Render the path
-                    }
-                }
-                
-            }
-            
-        }
+            ctx.moveTo(step.from[0], step.from[1]); // Move the pen to (30, 50)
+            ctx.lineTo(step.to[0], step.to[1]); // Draw a line to (150, 100)
+            ctx.stroke(); // Render the path
+        });
     }
 
     let newPosition = {x: PlayerPosition.x, y: PlayerPosition.y}
