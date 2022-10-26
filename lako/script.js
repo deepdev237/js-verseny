@@ -53,15 +53,18 @@ const Walls = {
             "from" : [10, 10],
             "to" : [600, 10]
         },
+        
         "window" : {
             "from" : [600, 10],
             "to" : [700, 10]
         },
+        
         "wall" : {
             "from" : [700, 10],
             "to" : [1200, 10]
         },
-    },
+        
+    }
 }
 
 function isOutsideOfCanvas(pos) {
@@ -89,25 +92,19 @@ function main() {
                 if (Object.hasOwnProperty.call(step, key)) {
                     const steps = step[key];
                     if (key == "wall") {
-                        ctx.lineWidth = 3
-                        ctx.beginPath(); // Start a new path
-                        ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
-                        ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
-                        ctx.stroke(); // Render the path
+                        ctx.lineWidth = 2
                     } else if (key == "window"){
                         ctx.lineWidth = 1
-                        ctx.beginPath(); // Start a new path
-                        ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
-                        ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
-                        ctx.stroke(); // Render the path
                     }
+                    ctx.beginPath(); // Start a new path
+                    ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
+                    ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
+                    ctx.stroke(); // Render the path
                 }
             }
             
         }
     }
-    
-    
 
     let newPosition = {x: PlayerPosition.x, y: PlayerPosition.y}
 
