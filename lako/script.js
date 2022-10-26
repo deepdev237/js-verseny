@@ -48,7 +48,7 @@ const playerStep = 2
 var playerSpeed = 1
 
 function isOutsideOfCanvas(pos) {
-    if (pos.x < 0 || pos.y < 0) {
+    if (pos.x < 0 || pos.y < -900) {
         return true;
     } else {
         return false;
@@ -69,8 +69,8 @@ function main() {
     if (PlayerControls["shift"].toggle == true) {
         console.log("shift")
         playerSpeed = 2
-    } else if (PlayerControls["ctrl"].toggle == true) {
-        console.log("ctrl")
+    } else if (PlayerControls["space"].toggle == true) {
+        console.log("space")
         playerSpeed = 0.5
     } else {
         playerSpeed = 1
