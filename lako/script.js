@@ -34,12 +34,12 @@ const PlayerControls = {
         "key" : 68,
         "toggle" : false,
     },
-    "shift" : { //todo
+    "shift" : {
         "key" : 16,
         "toggle" : false,
     },
-    "ctrl" : { //todo
-        "key" : 17,
+    "space" : {
+        "key" : 32,
         "toggle" : false,
     }
 }
@@ -47,7 +47,7 @@ const PlayerControls = {
 const playerStep = 2
 var playerSpeed = 1
 
-function isOutsideOfCanvas(pos) { //todo
+function isOutsideOfCanvas(pos) {
     if (pos.x < 0 || pos.y < 0) {
         return true;
     } else {
