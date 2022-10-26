@@ -92,7 +92,6 @@ function main() {
 
     if (!isOutsideOfCanvas(newPosition)) {
         PlayerPosition = newPosition
-        console.log(PlayerPosition)
     }
 }
 window.requestAnimationFrame(main);
