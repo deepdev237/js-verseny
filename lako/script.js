@@ -48,7 +48,8 @@ const playerStep = 2
 var playerSpeed = 1
 
 function isOutsideOfCanvas(pos) {
-    if (pos.x < 0 || pos.y < -900) {
+    let canvas = document.getElementById("canvas");
+    if (pos.x < 0 || pos.x > (canvas.width - 100) || pos.y < 0 || pos.y > (canvas.height - 100)) {
         return true;
     } else {
         return false;
@@ -91,6 +92,7 @@ function main() {
 
     if (!isOutsideOfCanvas(newPosition)) {
         PlayerPosition = newPosition
+        console.log(PlayerPosition)
     }
 }
 window.requestAnimationFrame(main);
