@@ -84,23 +84,40 @@ function main() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "blue";
     ctx.fillRect(PlayerPosition.x, PlayerPosition.y, 100, 100);
-
+ 
     for (const key in Walls) {
         if (Object.hasOwnProperty.call(Walls, key)) {
             const step = Walls[key];
+            
             for (const key in step) {
+                
                 if (Object.hasOwnProperty.call(step, key)) {
                     const steps = step[key];
                     if (key == "wall") {
-                        ctx.lineWidth = 2
-                    } else if (key == "window"){
-                        ctx.lineWidth = 1
+                        ctx.beginPath(); // Start a new path
+                        ctx.lineWidth = 3
+                        ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
+                        ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
+                        ctx.stroke(); // Render the path
                     }
-                    ctx.beginPath(); // Start a new path
-                    ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
-                    ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
-                    ctx.stroke(); // Render the path
                 }
+                
+            }
+            
+            
+            for (const key in step) {
+                
+                if (Object.hasOwnProperty.call(step, key)) {
+                    const steps = step[key];
+                    if (key == "window") {
+                        ctx.beginPath(); // Start a new path
+                        ctx.lineWidth = 1
+                        ctx.moveTo(steps.from[0], steps.from[1]); // Move the pen to (30, 50)
+                        ctx.lineTo(steps.to[0], steps.to[1]); // Draw a line to (150, 100)
+                        ctx.stroke(); // Render the path
+                    }
+                }
+                
             }
             
         }
