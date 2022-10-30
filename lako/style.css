@@ -16,6 +16,6 @@ canvas {
     left: 0;
     right: 0;
     margin:auto;
-    background: rgb(60, 155, 218);
+    background: #252829;
     box-shadow: 0 0 10px 2px rgb(132, 132, 132);
 }

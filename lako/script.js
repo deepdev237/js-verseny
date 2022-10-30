@@ -108,19 +108,22 @@ function main() {
                 ctx.strokeStyle = "black";
             } else if (step.type == "window") {
                 ctx.lineWidth = windowWidth;
-                ctx.strokeStyle = "white";
+                ctx.strokeStyle = "cyan";
             }
             
             if (step.type == "door") {
+                //Draw Door
                 ctx.strokeStyle = "white";
                 ctx.lineWidth = windowWidth;
-                //ctx.fillStyle = "white"; 
-                ctx.fillRect(step.from[0], step.from[1], step.to[0] - step.from[0], step.to[1] - step.from[1]);
-                
-                ctx.moveTo(step.from[0], step.from[1]);
-                ctx.lineTo(step.to[0], step.to[1] - 10);
+                let lineStart = {x: step.from[0], y: step.from[1]}
+                let lineEnd = {x: lineStart.x - 100, y: lineStart.y}
+                let arcStart = {x: step.to[0], y: step.to[1]}
+                ctx.moveTo(lineStart.x, lineStart.y);
+                ctx.lineTo(lineEnd.x, lineEnd.y);
+                ctx.bezierCurveTo(lineEnd.x - 10, lineEnd.y, arcStart.x - 75, arcStart.y, arcStart.x, arcStart.y);
+                ctx.stroke(); // Render the path
             } else {
-                // Draw
+                // Draw Wall or Window
                 ctx.moveTo(step.from[0], step.from[1]);
                 ctx.lineTo(step.to[0], step.to[1]);
                 ctx.stroke(); // Render the path
@@ -140,4 +143,3 @@ function main() {
     }
 }
 window.requestAnimationFrame(main); //Start the main loop
-
