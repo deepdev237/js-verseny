@@ -14,33 +14,16 @@ function setKeys(toggle, keyCode) {
 }
 
 //Player Variables
-var PlayerPosition = {x: 656, y: 400}
-const playerSize = {x: 10, y: 10}
+var PlayerPosition = {x: 500, y: 400}
+const playerSize = {x: 50, y: 50}
+//make PlayerControls object
 const PlayerControls = {
-    "w" : {
-        "key" : 87,
-        "toggle" : false,
-    },
-    "a" : {
-        "key" : 65,
-        "toggle" : false,
-    },
-    "s" : {
-        "key" : 83,
-        "toggle" : false,
-    },
-    "d" : {
-        "key" : 68,
-        "toggle" : false,
-    },
-    "shift" : {
-        "key" : 16,
-        "toggle" : false,
-    },
-    "space" : {
-        "key" : 32,
-        "toggle" : false,
-    }
+    w: {key: 87, toggle: false},
+    a: {key: 65, toggle: false},
+    s: {key: 83, toggle: false},
+    d: {key: 68, toggle: false},
+    space: {key: 32, toggle: false},
+    shift: {key: 16, toggle: false}
 }
 const playerStep = 1
 var playerSpeed = 1
@@ -48,7 +31,7 @@ var playerSpeed = 1
 //Walls, Windows, Doors
 const wallWidth = 5
 const windowWidth = 2
-const FloorPlan = {
+var FloorPlan = {
     "outer-top" : [
         {type: 'wall', from: [10, 10], to: [600, 10]},
         {type: 'window', from: [600, 10], to: [700, 10]},
@@ -76,17 +59,17 @@ const FloorPlan = {
 
 function isPosOutsideOfCanvas(pos) {
     let canvas = document.getElementById("canvas");
-    if (pos.x < 0 || pos.x > (canvas.width - 10) || pos.y < 0 || pos.y > (canvas.height - 10)) {
+    if (pos.x < 0 || pos.x > canvas.width - playerSize.x || pos.y < 0 || pos.y > canvas.height - playerSize.y) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 function main() {
-    window.requestAnimationFrame(main);
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
+    //Main loop
+    window.requestAnimationFrame(main); //Request next frame
+    var canvas = document.getElementById("canvas"); //Get canvas
+    var ctx = canvas.getContext("2d"); //2d context for drawing
 
     //Drawing Player
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -94,35 +77,27 @@ function main() {
     ctx.fillRect(PlayerPosition.x, PlayerPosition.y, playerSize.x, playerSize.y);
 
     //Handling Player Movement
+    let isPosInsideOfWall = false; //will be checked below in the for loop
     let newPosition = {x: PlayerPosition.x, y: PlayerPosition.y}
 
-    if (PlayerControls["shift"].toggle == true) {
-        playerSpeed = 2;
-    } else if (PlayerControls["space"].toggle == true) {
-        playerSpeed = 0.5;
-    } else {
-        playerSpeed = 1;
+    // if shift is pressed, playerSpeed is 2, else if space is pressed, playerSpeed is 0.5, else playerSpeed is 1
+    playerSpeed = PlayerControls["shift"].toggle == true ? 2 : PlayerControls["space"].toggle == true ? 0.5 : 1;
+
+    //Movement
+    if (PlayerControls["w"].toggle == true) { //Up
+        newPosition.y -= playerStep * playerSpeed;
+    }
+    if (PlayerControls["a"].toggle == true) { //Left
+        newPosition.x -= playerStep * playerSpeed;
+    }
+    if (PlayerControls["s"].toggle == true) { //Down
+        newPosition.y += playerStep * playerSpeed;
+    }
+    if (PlayerControls["d"].toggle == true) { //Right
+        newPosition.x += playerStep * playerSpeed;
     }
 
-    if (PlayerControls["w"].toggle == true) {
-        newPosition.y -= (playerStep * playerSpeed);
-    }
-    if (PlayerControls["a"].toggle == true) {
-        newPosition.x -= (playerStep * playerSpeed);
-    }
-    if (PlayerControls["s"].toggle == true) {
-        newPosition.y += (playerStep * playerSpeed);
-    }
-    if (PlayerControls["d"].toggle == true) {
-        newPosition.x += (playerStep * playerSpeed);
-    }
-
-    if (!isPosOutsideOfCanvas(newPosition)) {
-        PlayerPosition = newPosition;
-        console.log(PlayerPosition)
-    }
-
-    //Drawing Walls, Windows, Doors
+    //Drawing Walls, Windows, Doors and checking if NewPosition is inside of a wall
     for (const wall in FloorPlan) {
         const steps = FloorPlan[wall];
         steps.forEach(step => {
@@ -130,18 +105,39 @@ function main() {
             
             if (step.type == "wall") {
                 ctx.lineWidth = wallWidth;
+                ctx.strokeStyle = "black";
             } else if (step.type == "window") {
                 ctx.lineWidth = windowWidth;
+                ctx.strokeStyle = "white";
             }
             
             if (step.type == "door") {
+                ctx.strokeStyle = "white";
+                ctx.lineWidth = windowWidth;
+                //ctx.fillStyle = "white"; 
+                ctx.fillRect(step.from[0], step.from[1], step.to[0] - step.from[0], step.to[1] - step.from[1]);
                 
+                ctx.moveTo(step.from[0], step.from[1]);
+                ctx.lineTo(step.to[0], step.to[1] - 10);
             } else {
+                // Draw
                 ctx.moveTo(step.from[0], step.from[1]);
                 ctx.lineTo(step.to[0], step.to[1]);
                 ctx.stroke(); // Render the path
+
+                //checking if NewPosition is inside of wall
+                if (newPosition.x + playerSize.x > step.from[0] && newPosition.x < step.to[0] && newPosition.y + playerSize.y > step.from[1] && newPosition.y < step.to[1]) {
+                    isPosInsideOfWall = true;
+                }
             }
         });
     }
+
+    //if the new position is not outside of the canvas and not in a wall, then update the player position
+    if (!isPosOutsideOfCanvas(newPosition) && isPosInsideOfWall == false) { 
+        PlayerPosition = newPosition;
+        console.log(PlayerPosition) //for debugging
+    }
 }
-window.requestAnimationFrame(main);
+window.requestAnimationFrame(main); //Start the main loop
+
