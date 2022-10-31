@@ -16,7 +16,6 @@ function setKeys(toggle, keyCode) {
 //Player Variables
 var PlayerPosition = {x: 500, y: 400}
 const playerSize = {x: 50, y: 50}
-//make PlayerControls object
 const PlayerControls = {
     w: {key: 87, toggle: false},
     a: {key: 65, toggle: false},
@@ -54,8 +53,52 @@ var FloorPlan = {
         {type: 'wall', from: [710, 10], to: [710, 400]},
         {type: 'door', from: [710, 400], to: [710, 500]},
         {type: 'wall', from: [710, 500], to: [710, 890]},
-    ]
+    ],
+    "top-right room" : [
+        {type: 'wall', from: [710, 400], to: [900, 400]},
+        {type: 'door', from: [900, 400], to: [1000, 400]},
+        {type: 'wall', from: [1000, 400], to: [1335, 400]},
+    ],
+
 }
+
+//Sensors
+var Sensors = {
+    "motion" : {
+        location : {x: 1310, y: 25},
+        range : 600,
+        fov : 90,
+        triggered : false
+    },
+    "door" : {},
+    "sound" : {}
+}
+
+function distanceBetweenPoints(pos1, pos2) {
+    return Math.sqrt(Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2));
+}
+
+//https://stackoverflow.com/questions/9043805/test-if-two-lines-intersect-javascript-function
+function intersects(a,b,c,d,p,q,r,s) {
+    var det, gamma, lambda;
+    det = (c - a) * (s - q) - (r - p) * (d - b);
+    if (det === 0) {
+      return false;
+    } else {
+        lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
+        gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+
+        let isIntersecting = (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
+
+        if (isIntersecting) {
+            var x = a + (lambda * (c - a));
+            var y = b + (lambda * (d - b));
+            return {x: x, y: y};
+        } else {
+            return isIntersecting;
+        }
+    }
+};
 
 function isPosOutsideOfCanvas(pos) {
     let canvas = document.getElementById("canvas");
@@ -115,13 +158,32 @@ function main() {
                 //Draw Door
                 ctx.strokeStyle = "white";
                 ctx.lineWidth = windowWidth;
-                let lineStart = {x: step.from[0], y: step.from[1]}
-                let lineEnd = {x: lineStart.x - 100, y: lineStart.y}
-                let arcStart = {x: step.to[0], y: step.to[1]}
-                ctx.moveTo(lineStart.x, lineStart.y);
-                ctx.lineTo(lineEnd.x, lineEnd.y);
-                ctx.bezierCurveTo(lineEnd.x - 10, lineEnd.y, arcStart.x - 75, arcStart.y, arcStart.x, arcStart.y);
-                ctx.stroke(); // Render the path
+
+                if (step.from[0] == step.to[0]) {
+                    //vertical
+                    let lineStart = {x: step.from[0], y: step.from[1]} //Door start
+                    let lineEnd = {x: lineStart.x - 100, y: lineStart.y} //Line ends 100px to the left of the start
+                    ctx.moveTo(lineStart.x, lineStart.y);
+                    ctx.lineTo(lineEnd.x, lineEnd.y);
+
+                    let arcEnd = {x: step.to[0], y: step.to[1]}
+                    
+                    //arc starts from lineEnd to the end of the door
+                    ctx.bezierCurveTo(lineEnd.x - 10, lineEnd.y, arcEnd.x - 75, arcEnd.y, arcEnd.x, arcEnd.y);
+                    ctx.stroke(); // Render the path
+                } else {
+                    //horizontal
+                    let lineStart = {x: step.from[0], y: step.from[1]} //Door start
+                    let lineEnd = {x: lineStart.x, y: lineStart.y - 100} //Line ends 100px above the start
+                    ctx.moveTo(lineStart.x, lineStart.y);
+                    ctx.lineTo(lineEnd.x, lineEnd.y);
+
+                    let arcEnd = {x: step.to[0], y: step.to[1]}
+
+                    //arc starts from lineEnd to the end of the door
+                    ctx.bezierCurveTo(lineEnd.x, lineEnd.y - 10, arcEnd.x, arcEnd.y - 75, arcEnd.x, arcEnd.y);
+                    ctx.stroke(); // Render the path
+                }
             } else {
                 // Draw Wall or Window
                 ctx.moveTo(step.from[0], step.from[1]);
@@ -136,10 +198,75 @@ function main() {
         });
     }
 
+    //loop through sensors
+    for (const sensor in Sensors) {
+        const sensorData = Sensors[sensor];
+        const sensorPos = sensorData.location;
+        
+        if (sensor == "motion") {
+            let rayrange = sensorData.range; //length of ray
+
+            //shoot ray from sensorPos to the player
+            ray = {x: sensorPos.x, y: sensorPos.y};
+            //rayangle taking into account the player's position and size and the sensor's position
+            let rayAngle = Math.atan2(PlayerPosition.y + playerSize.y / 2 - sensorPos.y, PlayerPosition.x + playerSize.x / 2 - sensorPos.x);
+            let rayEnd = {x: ray.x + rayrange * Math.cos(rayAngle), y: ray.y + rayrange * Math.sin(rayAngle)};
+
+            //get a line from top left to bottom right of the player
+            let playerLine = {x1: PlayerPosition.x, y1: PlayerPosition.y, x2: PlayerPosition.x + playerSize.x, y2: PlayerPosition.y + playerSize.y};
+
+            //get ray intersection with the playerline using intersects function
+            let playerIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, playerLine.x1, playerLine.y1, playerLine.x2, playerLine.y2);
+            //get distance between sensor and playerintersection
+            let playerIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - playerIntersection.x, 2) + Math.pow(sensorPos.y - playerIntersection.y, 2));
+
+            if (playerIntersection) {
+                //if there is an intersection, draw a circle at the intersection point
+                ctx.beginPath();
+                ctx.arc(playerIntersection.x, playerIntersection.y, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = "red";
+                ctx.fill();
+
+                //get closest wall intersection to sensor that is not door
+                let closestWallIntersection = {x: 0, y: 0, distance: Infinity};
+                for (const wall in FloorPlan) {
+                    const steps = FloorPlan[wall];
+                    steps.forEach(step => {
+                        if (step.type != "door") {
+                            let wallIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, step.from[0], step.from[1], step.to[0], step.to[1]);
+                            if (wallIntersection) {
+                                let wallIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - wallIntersection.x, 2) + Math.pow(sensorPos.y - wallIntersection.y, 2));
+                                if (wallIntersectionDistance < closestWallIntersection.distance) {
+                                    closestWallIntersection = {x: wallIntersection.x, y: wallIntersection.y, distance: wallIntersectionDistance};
+                                }
+                            }
+                        }
+                    });
+                }
+
+                //if playerintersection is closer than closestwallintersection to the sensor set sensorData.triggered to true
+                if (closestWallIntersection.distance > playerIntersectionDistance) {
+                    sensorData.triggered = true;
+                } else {
+                    sensorData.triggered = false;
+                }
+            } else {
+                sensorData.triggered = false;
+            }
+
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = sensorData.triggered ? "green" : "red";
+            ctx.moveTo(sensorData.location.x, sensorData.location.y);
+            ctx.lineTo(newPosition.x + playerSize.x / 2, newPosition.y + playerSize.y / 2);
+            ctx.stroke(); // Render the path
+        }
+    }
+
     //if the new position is not outside of the canvas and not in a wall, then update the player position
     if (!isPosOutsideOfCanvas(newPosition) && isPosInsideOfWall == false) { 
         PlayerPosition = newPosition;
-        console.log(PlayerPosition) //for debugging
+        //console.log(PlayerPosition) //for debugging
     }
 }
 window.requestAnimationFrame(main); //Start the main loop
