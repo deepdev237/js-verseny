@@ -31,7 +31,7 @@ var PlayerMovedLast5Seconds = false;
 //Walls, Windows, Doors
 const wallWidth = 5
 const windowWidth = 2
-const FloorPlan = {
+var FloorPlan = {
     "outer-top" : [
         {type: 'wall', from: [10, 10], to: [600, 10]},
         {type: 'window', from: [600, 10], to: [700, 10]},
@@ -50,17 +50,22 @@ const FloorPlan = {
         {type: 'window', from: [1335, 400], to: [1335, 500]},
         {type: 'wall', from: [1335, 500], to: [1335, 890]}
     ],
-    "middle-wall" : [
+    "middle-wall motion" : [
         {type: 'wall', from: [710, 10], to: [710, 400]},
-        {type: 'door', from: [710, 400], to: [710, 500]},
+        {type: 'door', from: [710, 400], to: [710, 500], triggered : false},
         {type: 'wall', from: [710, 500], to: [710, 890]},
     ],
-    "top-right room" : [
+    "top-right wall motion" : [
         {type: 'wall', from: [710, 400], to: [900, 400]},
-        {type: 'door', from: [900, 400], to: [1000, 400]},
+        {type: 'door', from: [900, 400], to: [1000, 400], triggered : false},
         {type: 'wall', from: [1000, 400], to: [1335, 400]},
     ],
-
+    "top-left sound room" : [
+        {type: 'wall', from: [10, 400], to: [400, 400]},
+        {type: 'wall', from: [400, 400], to: [400, 250]},
+        {type: 'door', from: [400, 250], to: [400, 150], triggered : false},
+        {type: 'wall', from: [400, 150], to: [400, 10]},
+    ],
 }
 
 //Sensors
@@ -68,11 +73,15 @@ var Sensors = {
     "motion" : {
         location : {x: 1310, y: 25},
         range : 600,
-        fov : 90,
+        text : "Motion Sensor",
         triggered : false
     },
-    "door" : {},
-    "sound" : {}
+    "sound" : {
+        location : {x: 15, y: 50},
+        text : "Sound Sensor",
+        triggered : false
+    },
+    "door" : {},   
 }
 
 function distanceBetweenPoints(pos1, pos2) {
@@ -96,7 +105,7 @@ function intersects(a,b,c,d,p,q,r,s) {
             var y = b + (lambda * (d - b));
             return {x: x, y: y};
         } else {
-            return isIntersecting;
+            return false;
         }
     }
 };
@@ -202,63 +211,162 @@ function main() {
     //Sensors
     for (const sensor in Sensors) {
         const sensorData = Sensors[sensor];
-        const sensorPos = sensorData.location;
+        let sensorPos = sensorData.location;
         
+        ctx.font = "20px Arial";
+        ctx.fillStyle = sensorData.triggered ? "red" : "green";
+
         if (sensor == "motion") {
+            let triggered = false;
             if (PlayerMovedLast5Seconds) {
-	            let triggered = false;
-	            let rayRange = sensorData.range; //length of ray
-	
-	            //shoot ray from sensorPos to the player
-	            let ray = {x: sensorPos.x, y: sensorPos.y};
-	            let rayAngle = Math.atan2(PlayerPosition.y + playerSize.y / 2 - sensorPos.y, PlayerPosition.x + playerSize.x / 2 - sensorPos.x);
-	            let rayEnd = {x: ray.x + rayRange * Math.cos(rayAngle), y: ray.y + rayRange * Math.sin(rayAngle)};
-	
-	            //get a line from top left to bottom right of the player.. because player is not a line :O
-	            let playerLine = {x1: PlayerPosition.x, y1: PlayerPosition.y, x2: PlayerPosition.x + playerSize.x, y2: PlayerPosition.y + playerSize.y};
+                let rayRange = sensorData.range; //length of ray
 
-	            let playerIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, playerLine.x1, playerLine.y1, playerLine.x2, playerLine.y2);
+                //shoot ray from sensorPos to the player
+                let ray = {x: sensorPos.x, y: sensorPos.y};
+                let rayAngle = Math.atan2(PlayerPosition.y + playerSize.y / 2 - sensorPos.y, PlayerPosition.x + playerSize.x / 2 - sensorPos.x);
+                let rayEnd = {x: ray.x + rayRange * Math.cos(rayAngle), y: ray.y + rayRange * Math.sin(rayAngle)};
 
-	            let playerIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - playerIntersection.x, 2) + Math.pow(sensorPos.y - playerIntersection.y, 2));
-	
-	            if (playerIntersection) {
-	                //get closest wall intersection
-	                let closestWallIntersection = {x: 0, y: 0, distance: Infinity};
-	                for (const wall in FloorPlan) {
-	                    const steps = FloorPlan[wall];
-	                    steps.forEach(step => {
-	                        if (step.type != "door") {
-	                            let wallIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, step.from[0], step.from[1], step.to[0], step.to[1]);
-	                            if (wallIntersection) {
-	                                let wallIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - wallIntersection.x, 2) + Math.pow(sensorPos.y - wallIntersection.y, 2));
-	                                if (wallIntersectionDistance < closestWallIntersection.distance) {
-	                                    closestWallIntersection = {x: wallIntersection.x, y: wallIntersection.y, distance: wallIntersectionDistance};
-	                                }
-	                            }
-	                        }
-	                    });
-	                }
-	
-	                if (playerIntersectionDistance < closestWallIntersection.distance) { //if player is closer than the closest wall
-	                    triggered = true;
-	                } else {
-	                    triggered = false;
-	                }
-	            } else {
-	                triggered = false;
-	            }
-	
-	            if (triggered) {
+                //get a line from top left to bottom right of the player.. because player is not a line :O
+                let playerLine = {x1: PlayerPosition.x, y1: PlayerPosition.y, x2: PlayerPosition.x + playerSize.x, y2: PlayerPosition.y + playerSize.y};
+
+                let playerIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, playerLine.x1, playerLine.y1, playerLine.x2, playerLine.y2);
+
+                let playerIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - playerIntersection.x, 2) + Math.pow(sensorPos.y - playerIntersection.y, 2));
+
+                if (playerIntersection) {
+                    //get closest wall intersection
+                    let closestWallIntersection = {x: 0, y: 0, distance: Infinity};
+                    for (const wall in FloorPlan) {
+                        const steps = FloorPlan[wall];
+                        steps.forEach(step => {
+                            if (step.type != "door") {
+                                let wallIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, step.from[0], step.from[1], step.to[0], step.to[1]);
+                                if (wallIntersection) {
+                                    let wallIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - wallIntersection.x, 2) + Math.pow(sensorPos.y - wallIntersection.y, 2));
+                                    if (wallIntersectionDistance < closestWallIntersection.distance) {
+                                        closestWallIntersection = {x: wallIntersection.x, y: wallIntersection.y, distance: wallIntersectionDistance};
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    if (playerIntersectionDistance < closestWallIntersection.distance) { //if player is closer than the closest wall
+                        triggered = true;
+                    } else {
+                        triggered = false;
+                    }
+                } else {
+                    triggered = false;
+                }
+
+                if (triggered) {
                     sensorData.triggered = true;
-	            }
+                }
             } else {
                 sensorData.triggered = false;
             }
+            
 
-            //draw motion sensor text
-            ctx.font = "20px Arial";
-            ctx.fillStyle = sensorData.triggered ? "red" : "green";
             ctx.fillText("Motion Sensor", sensorPos.x - 100, sensorPos.y + 10);
+        } else if (sensor == "sound") {
+            if (PlayerMovedLast5Seconds) {
+                let rayRange = playerSpeed * 300; //length of ray
+
+                //360 degree raycast from player with 1 degree increments for loop
+                for (let i = 0; i < 360; i++) {
+                    //shoot ray from player
+                    let ray = {x: PlayerPosition.x + playerSize.x / 2, y: PlayerPosition.y + playerSize.y / 2};
+                    let rayAngle = i * Math.PI / 180;
+                    let rayEnd = {x: ray.x + rayRange * Math.cos(rayAngle), y: ray.y + rayRange * Math.sin(rayAngle)};
+
+                    //get closest wall intersection through all walls and doors
+                    let closestWallIntersection = {x: 0, y: 0, distance: Infinity};
+                    let secondClosestWallIntersection = {x: 0, y: 0, distance: Infinity};
+                    for (const wall in FloorPlan) {
+                        const steps = FloorPlan[wall];
+                        steps.forEach(step => {
+                            //if step is a door if it is we raycast through it
+                            if (step.type == "door") {
+                                //get second closest wall intersection
+                                for (const wall2 in FloorPlan) {
+                                    const steps2 = FloorPlan[wall2];
+                                    steps2.forEach(step2 => {
+                                        if (step2.type != "door") {
+                                            let wallIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, step2.from[0], step2.from[1], step2.to[0], step2.to[1]);
+                                            if (wallIntersection) {
+                                                let wallIntersectionDistance = Math.sqrt(Math.pow(ray.x - wallIntersection.x, 2) + Math.pow(ray.y - wallIntersection.y, 2));
+                                                if (wallIntersectionDistance < secondClosestWallIntersection.distance) {
+                                                    secondClosestWallIntersection = {x: wallIntersection.x, y: wallIntersection.y, distance: wallIntersectionDistance};
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            } else {
+                                let wallIntersection = intersects(ray.x, ray.y, rayEnd.x, rayEnd.y, step.from[0], step.from[1], step.to[0], step.to[1]);
+                                if (wallIntersection) {
+                                    let wallIntersectionDistance = Math.sqrt(Math.pow(PlayerPosition.x + playerSize.x / 2 - wallIntersection.x, 2) + Math.pow(PlayerPosition.y + playerSize.y / 2 - wallIntersection.y, 2));
+                                    if (wallIntersectionDistance < closestWallIntersection.distance) {
+                                        closestWallIntersection = {x: wallIntersection.x, y: wallIntersection.y, distance: wallIntersectionDistance};
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    if (secondClosestWallIntersection.distance != Infinity) {
+                        closestWallIntersection = secondClosestWallIntersection;
+                    }
+
+                    if (closestWallIntersection.distance !== Infinity) {
+                        //if closest wall intersection is close to sensor
+                        let sensorIntersectionDistance = Math.sqrt(Math.pow(sensorPos.x - closestWallIntersection.x, 2) + Math.pow(sensorPos.y - closestWallIntersection.y, 2));
+                        if (sensorIntersectionDistance < 100) {
+                            sensorData.triggered = true;
+                        }
+
+                    }
+                }
+            } else {
+                sensorData.triggered = false;
+            }
+            ctx.fillText("Sound Sensor", sensorPos.x, sensorPos.y);
+        } else if (sensor == "door") {            
+            for (const wall in FloorPlan) {
+                const steps = FloorPlan[wall];
+                steps.forEach(step => {
+                    if (step.type == "door") {
+                        if (PlayerMovedLast5Seconds) {
+                            ctx.fillStyle = "red";
+                            if (step.from[0] == step.to[0]) { //vertical
+                                if (PlayerPosition.x + playerSize.x / 2 > step.from[0] - 10 && PlayerPosition.x + playerSize.x / 2 < step.from[0] + 10) {
+                                    if (PlayerPosition.y + playerSize.y / 2 > step.from[1] && PlayerPosition.y + playerSize.y / 2 < step.to[1]) {
+                                        step.triggered = true;
+                                    }
+                                }
+
+                                if (step.triggered) {
+                                    ctx.fillRect(step.from[0] - 10, step.from[1], 20, step.to[1] - step.from[1]);
+                                }
+                            } else { //horizontal
+                                if (PlayerPosition.y + playerSize.y / 2 > step.from[1] - 10 && PlayerPosition.y + playerSize.y / 2 < step.from[1] + 10) {
+                                    if (PlayerPosition.x + playerSize.x / 2 > step.from[0] && PlayerPosition.x + playerSize.x / 2 < step.to[0]) {
+                                        step.triggered = true;
+                                    }
+                                }
+                                
+                                if (step.triggered) {
+                                    ctx.fillStyle = "red";
+                                    ctx.fillRect(step.from[0], step.from[1] - 10, step.to[0] - step.from[0], 20);
+                                }
+                            }
+                        } else {
+                            step.triggered = false;
+                        }
+                    }
+                });
+            }
         }
     }
 
@@ -268,6 +376,16 @@ function main() {
             PlayerMovedLast5Seconds = true;
         }
     }
+
+    //draw text to left bottom
+    ctx.fillStyle = "black";
+    ctx.font = "20px Arial";
+    ctx.fillText("Player Position: " + PlayerPosition.x + ", " + PlayerPosition.y, 10, canvas.height - 10);
+
+    //draw text above that
+    ctx.fillText("SPACE : LASSÚ  |  SHIFT : GYORS", 10, canvas.height - 40);
+
+
 }
 window.requestAnimationFrame(main); //Start the main loop
 
